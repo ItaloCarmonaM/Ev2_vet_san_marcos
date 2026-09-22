@@ -1,30 +1,13 @@
 # Grupo 2
 ## Integrantes
 - Ítalo Carmona (it.carmona@duocuc.cl)
-- Camilo Peña (correo@duocuc.cl)
-- Matías Yañez (correo@duocuc.cl)
+- Camilo Peña (ca.penag@duocuc.cl)
+- Matías Yañez (mat.yanezt@duocuc.cl)
 
-## Caso
-Veterinaria San Carlos
-
-## Descripción del caso
+## Caso Veterinaria San Carlos
 Veterinaria de mascotas domésticas aceptando perros, gatos, conejos y aves.
 Permite inicio de sesión y gestión de citas.
 Cuenta con vistas para cliente, veterinario y recepcionista.
-
-## Estructura del proyecto
-src/
-├── components/
-│   ├── atoms/
-│   │    ├── Boton.jsx
-│   │    └── InputTexto.jsx
-│   ├── molecules/
-│   │    └── CampoFormulario.jsx
-│   ├── organisms/
-│   │    └── FormularioLogin.jsx
-│   └── templates/
-└── pages/
-    └── Login.jsx
 
 ## Tecnologías
 - React + Vite
@@ -32,6 +15,7 @@ src/
 
 ## Cómo ejecutar el proyecto
 npm install
+
 npm run dev
 
 ## Material complementario
