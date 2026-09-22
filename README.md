@@ -1,16 +1,39 @@
-# React + Vite
+# Grupo 2
+## Integrantes
+- Ítalo Carmona (it.carmona@duocuc.cl)
+- Camilo Peña (correo@duocuc.cl)
+- Matías Yañez (correo@duocuc.cl)
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+## Caso
+Veterinaria San Carlos
 
-Currently, two official plugins are available:
+## Descripción del caso
+Veterinaria de mascotas domésticas aceptando perros, gatos, conejos y aves.
+Permite inicio de sesión y gestión de citas.
+Cuenta con vistas para cliente, veterinario y recepcionista.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Estructura del proyecto
+src/
+├── components/
+│   ├── atoms/
+│   │    ├── Boton.jsx
+│   │    └── InputTexto.jsx
+│   ├── molecules/
+│   │    └── CampoFormulario.jsx
+│   ├── organisms/
+│   │    └── FormularioLogin.jsx
+│   └── templates/
+└── pages/
+    └── Login.jsx
 
-## React Compiler
+## Tecnologías
+- React + Vite
+- React Bootstrap
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Cómo ejecutar el proyecto
+npm install
+npm run dev
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Material complementario
+Carpeta de Drive con documentos del semestre (ERS y otros):
+https://drive.google.com/drive/folders/1SsGsFhoXDgW7NzIUshiqj-TcnYFCs1jn?usp=sharing

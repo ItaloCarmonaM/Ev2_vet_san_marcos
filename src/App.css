@@ -1,184 +1,110 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
-
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
+:root {
+  --vet-primary: #2a8d7f;
+  --vet-primary-hover: #118376;
+  --vet-bg: #f4f9f7;
+  --vet-card-bg: #ffffff;
+  --vet-border: #d0e5df;
+  --vet-text-dark: #1d352e;
+  --vet-text-muted: #829a92;
+  --vet-radius: 12px;
 }
 
-#center {
+/* Fondo principal */
+.login-pagina {
+  min-height: 100vh;
+  background-color: var(--vet-bg);
   display: flex;
-  flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
 }
 
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-}
-
-#next-steps ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
-}
-
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
-}
-
-.ticks {
-  position: relative;
+/* Tarjeta del formulario (Organismo) */
+.tarjeta-login {
+  background-color: var(--vet-card-bg);
+  border: 1px solid var(--vet-border);
+  border-radius: var(--vet-radius);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  padding: 2.5rem 2rem;
   width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
+/* Título */
+.titulo-login {
+  color: var(--vet-primary);
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin-bottom: 1.75rem;
+  text-align: center;
+}
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
+/* Contenedor del campo (Molécula) */
+.campo-grupo {
+  margin-bottom: 1.25rem;
+  width: 100%;
+}
+
+.etiqueta-campo.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--vet-text-dark);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+/* Input de texto (Átomo) */
+.campo-input.form-control {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--vet-border);
+  border-radius: 8px;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.925rem;
+  color: var(--vet-text-dark);
+  background-color: #ffffff;
+  box-shadow: none;
+  transition: border-color 0.2s ease;
+}
+
+.campo-input.form-control::placeholder {
+  color: var(--vet-text-muted);
+}
+
+.campo-input.form-control:focus {
+  border-color: var(--vet-primary);
+  background-color: #ffffff;
+  box-shadow: none;
+  outline: none;
+}
+
+/* Botón para enviar formulario (Átomo) */
+.btn-custom.btn-primary {
+  display: block;
+  width: 100%;
+  background-color: var(--vet-primary);
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  box-shadow: none;
+  transition: background-color 0.2s ease;
+  margin-top: 1.75rem;
+}
+
+.btn-custom.btn-primary:hover,
+.btn-custom.btn-primary:focus,
+.btn-custom.btn-primary:active {
+  background-color: var(--vet-primary-hover);
+  border: none;
+  box-shadow: none;
+  outline: none;
 }
