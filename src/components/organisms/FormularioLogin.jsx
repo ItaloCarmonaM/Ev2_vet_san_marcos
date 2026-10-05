@@ -14,9 +14,12 @@ function FormularioLogin(props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="tarjeta-login">
-      <h3 className="titulo-login">Iniciar Sesión</h3>
+    <form onSubmit={handleSubmit} className="card p-4 shadow-sm tarjeta-login">
+      <h3 className="titulo-login mb-3 text-center fw-bold">Iniciar Sesión</h3>
+      
       <CampoFormulario
+        id="email"
+        name="email"
         etiqueta="Correo Electrónico"
         tipo="email"
         placeholder="ejemplo@ejemplo.com"
@@ -26,6 +29,8 @@ function FormularioLogin(props) {
       />
       
       <CampoFormulario
+        id="password"
+        name="password"
         etiqueta="Contraseña"
         tipo="password"
         placeholder="*******"
@@ -33,7 +38,13 @@ function FormularioLogin(props) {
         onChange={(e) => setPassword(e.target.value)}
         requerido={true}
       />
-      <Boton tipo="submit" texto="Ingresar" variante="primary" />
+
+      <Boton
+        tipo="submit"
+        texto="Ingresar"
+        variante="primary"
+        className="w-100 mt-2"
+      />
     </form>
   );
 }

@@ -1,6 +1,6 @@
 function CampoTexto(props) {
   const tipo = props.tipo || "text";
-  const className = props.className ? "form-control campo-input ${props.className}" : "form-control campo-input";
+  const className = props.className ? `form-control campo-input ${props.className}` : "form-control campo-input";
 
   return (
     <input
@@ -11,9 +11,9 @@ function CampoTexto(props) {
       placeholder={props.placeholder}
       value={props.valor}
       onChange={props.onChange}
-      required={props.requerido}
+      required={props.requerido}  
     />
   );
 }
 
-export default InputTexto;
+export default CampoTexto;

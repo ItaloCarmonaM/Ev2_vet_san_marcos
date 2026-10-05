@@ -7,7 +7,7 @@ function Login() {
   }
 
   return (
-    <div className="login-pagina">
+    <div className="login-pagina bg-light">
       <Container className="d-flex align-items-center justify-content-center min-vh-100">
         <Row className="w-100 justify-content-center">
           <Col xs={12} sm={9} md={6} lg={4}>
