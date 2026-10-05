@@ -24,10 +24,11 @@ function FormularioLogin(props) {
         onChange={(e) => setEmail(e.target.value)}
         requerido={true}
       />
+      
       <CampoFormulario
         etiqueta="Contraseña"
         tipo="password"
-        placeholder="••••••••"
+        placeholder="*******"
         valor={password}
         onChange={(e) => setPassword(e.target.value)}
         requerido={true}

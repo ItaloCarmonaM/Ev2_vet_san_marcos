@@ -1,10 +1,13 @@
-function InputTexto(props) {
+function CampoTexto(props) {
   const tipo = props.tipo || "text";
+  const className = props.className ? "form-control campo-input ${props.className}" : "form-control campo-input";
 
   return (
     <input
+      id={props.id}
+      name={props.name}
       type={tipo}
-      className="form-control campo-input"
+      className={className}
       placeholder={props.placeholder}
       value={props.valor}
       onChange={props.onChange}
