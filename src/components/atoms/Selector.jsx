@@ -1,3 +1,4 @@
+// Átomo: lista desplegable. Recibe las opciones como [{ valor, texto, deshabilitada }].
 function Selector(props) {
   const opciones = props.opciones || [];
   const clases = `form-select campo-input ${props.className || ""}`.trim();
@@ -13,7 +14,11 @@ function Selector(props) {
     >
       <option value="">{props.placeholder || "Selecciona una opción"}</option>
       {opciones.map((opcion) => (
-        <option key={opcion.valor} value={opcion.valor}>
+        <option
+          key={opcion.valor}
+          value={opcion.valor}
+          disabled={opcion.deshabilitada} // NUEVO
+        >
           {opcion.texto}
         </option>
       ))}
