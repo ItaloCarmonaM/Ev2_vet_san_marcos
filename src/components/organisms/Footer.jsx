@@ -1,68 +1,46 @@
-import { Link } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
-import Icono from "../atoms/Icono";
+import React from 'react';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
-const ENLACES_POR_DEFECTO = [
-  { texto: "Inicio", ruta: "/" },
-  { texto: "Servicios", ruta: "/servicios" },
-  { texto: "Solicitar cita", ruta: "/solicitar-cita" },
-  { texto: "Mis citas", ruta: "/mis-citas" },
-];
-
-// Props opcionales: enlaces, direccion, telefono, email, horario
-function Footer(props) {
-  const enlaces = props.enlaces || ENLACES_POR_DEFECTO;
-  const direccion = props.direccion || "San Bernardo, Santiago";
-  const telefono = props.telefono || "+56 9 1234 5678";
-  const email = props.email || "contacto@vetsanmarcos.cl";
-  const horario = props.horario || "Lun a Vie 09:00 a 19:00 · Sáb 09:00 a 14:00";
-  const anio = new Date().getFullYear();
-
+function Footer() {
   return (
-    <footer className="footer-vet bg-light border-top mt-5 pt-4">
+    <footer className="bg-dark text-light py-4 mt-5">
       <Container>
-        <Row className="gy-4">
-          <Col xs={12} md={4}>
-            <div className="d-flex align-items-center gap-2 fw-bold mb-2">
-              <Icono nombre="huella" tamano={26} />
-              Veterinaria San Marcos
-            </div>
-            <p className="text-muted small">
-              Cuidamos a tu mascota con cariño y profesionalismo.
+        <Row className="gy-3">
+          <Col md={4}>
+            <h5 className="fw-bold text-primary">Veterinaria San Marcos</h5>
+            <p className="small text-muted mb-0">
+              Cuidamos la salud y el bienestar de tus mascotas con atención profesional y personalizada en Rancagua.
             </p>
           </Col>
 
-          <Col xs={6} md={4}>
-            <h6 className="fw-bold">Navegación</h6>
-            <ul className="list-unstyled mb-0">
-              {enlaces.map((enlace) => (
-                <li key={enlace.ruta}>
-                  <Link to={enlace.ruta} className="text-decoration-none">
-                    {enlace.texto}
-                  </Link>
-                </li>
-              ))}
+          <Col md={4}>
+            <h6>Contacto y Ubicación</h6>
+            <ul className="list-unstyled small text-muted mb-0">
+              <li>📍 Av. San Marcos 1234, Rancagua</li>
+              <li>📞 +56 9 1234 5678</li>
+              <li>✉️ contacto@veterinariasanmarcos.cl</li>
             </ul>
           </Col>
 
-          <Col xs={6} md={4}>
-            <h6 className="fw-bold">Contacto</h6>
+          <Col md={4}>
+            <h6>Horario de Atención</h6>
             <ul className="list-unstyled small text-muted mb-0">
-              <li>{direccion}</li>
-              <li>{telefono}</li>
-              <li>{email}</li>
-              <li className="d-flex align-items-center gap-1">
-                <Icono nombre="reloj" tamano={14} />
-                {horario}
-              </li>
+              <li>Lunes a Viernes: 09:00 - 19:00 hrs</li>
+              <li>Sábados: 10:00 - 14:00 hrs</li>
+              <li>Urgencias 24/7 (Sujeto a tarifa especial)</li>
             </ul>
           </Col>
         </Row>
 
-        <hr />
-        <p className="text-center text-muted small pb-3 mb-0">
-          © {anio} Veterinaria San Marcos. Todos los derechos reservados.
-        </p>
+        <hr className="my-3 border-secondary" />
+
+        <Row>
+          <Col className="text-center small text-muted">
+            &copy; {new Date().getFullYear()} Veterinaria San Marcos. Todos los derechos reservados.
+          </Col>
+        </Row>
       </Container>
     </footer>
   );
