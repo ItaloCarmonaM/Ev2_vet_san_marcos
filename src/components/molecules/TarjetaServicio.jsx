@@ -1,16 +1,15 @@
 import Icono from "../atoms/Icono";
 import EtiquetaEspecie from "../atoms/EtiquetaEspecie";
 import Boton from "../atoms/Boton";
+import { formatearPrecio, separarEspecies } from "../../utils/formato";
 
 function TarjetaServicio(props) {
   // "Perro / Gato" -> ["Perro", "Gato"], una etiqueta por especie
-  const especies = props.especie
-    ? props.especie.split("/").map((e) => e.trim())
-    : [];
+const especies = separarEspecies(props.especie);
+
 
   // 15000 -> "15.000"
-  const precio =
-    props.precio !== undefined ? Number(props.precio).toLocaleString("es-CL") : "";
+  const precio = formatearPrecio(props.precio);
 
   return (
     <div className="card h-100 shadow-sm tarjeta-servicio">
