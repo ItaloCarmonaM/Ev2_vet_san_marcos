@@ -1,34 +1,38 @@
-import React, { useState } from 'react';
-import PlantillaPublica from '../components/templates/PlantillaPublica';
-import BuscadorServicios from '../components/molecules/BuscadorServicios';
-import ListaServicios from '../components/organisms/ListaServicios';
-import serviciosData from '../data/servicios';
+import { useState } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import PlantillaPublica from "../components/templates/PlantillaPublica";
+import BuscadorServicios from "../components/molecules/BuscadorServicios";
+import CampoFormulario from "../components/molecules/CampoFormulario";
+import ListaServicios from "../components/organisms/ListaServicios";
+import serviciosData from "../data/servicios";
+import { normalizarTexto } from "../utils/formato";
+
+// Categorías sacadas del catálogo, sin repetir
+const CATEGORIAS = [...new Set(serviciosData.map((s) => s.categoria))].map(
+  (c) => ({ valor: c, texto: c })
+);
 
 function Servicios() {
-  const [busqueda, setBusqueda] = useState('');
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
+  const [busqueda, setBusqueda] = useState("");
+  const [categoria, setCategoria] = useState("");
 
-  const serviciosFiltrados = serviciosData.filter((servicio) => {
-    const coincideTexto = servicio.nombre
-      .toLowerCase()
-      .includes(busqueda.toLowerCase()) || 
-      servicio.descripcion
-      .toLowerCase()
-      .includes(busqueda.toLowerCase());
+  const texto = normalizarTexto(busqueda.trim());
 
-    const coincideCategoria = categoriaSeleccionada === '' || 
-      servicio.categoria === categoriaSeleccionada;
-
+  const serviciosFiltrados = serviciosData.filter((s) => {
+    const coincideTexto =
+      normalizarTexto(s.nombre).includes(texto) ||
+      normalizarTexto(s.observaciones).includes(texto);
+    const coincideCategoria = categoria === "" || s.categoria === categoria;
     return coincideTexto && coincideCategoria;
   });
 
-  const manejarSeleccionarServicio = (servicio) => {
+  function manejarSeleccionarServicio(servicio) {
     alert(`Has seleccionado el servicio: ${servicio.nombre}`);
-  };
+  }
 
   return (
     <PlantillaPublica>
-      <div className="container py-4">
+      <Container className="py-4">
         <header className="mb-4 text-center">
           <h1 className="fw-bold text-primary">Nuestros Servicios Médicos</h1>
           <p className="text-muted fs-5">
@@ -37,12 +41,24 @@ function Servicios() {
         </header>
 
         <section className="mb-4">
-          <BuscadorServicios
-            busqueda={busqueda}
-            onBusquedaChange={(e) => setBusqueda(e.target.value)}
-            categoria={categoriaSeleccionada}
-            onCategoriaChange={(e) => setCategoriaSeleccionada(e.target.value)}
-          />
+          <Row className="g-3 align-items-start">
+            <Col md={8}>
+              <BuscadorServicios
+                valor={busqueda}
+                onChange={(e) => setBusqueda(e.target.value)}
+              />
+            </Col>
+            <Col md={4}>
+              <CampoFormulario
+                id="filtroCategoria"
+                name="categoria"
+                opciones={CATEGORIAS}
+                placeholder="Todas las categorías"
+                valor={categoria}
+                onChange={(e) => setCategoria(e.target.value)}
+              />
+            </Col>
+          </Row>
         </section>
 
         <section>
@@ -51,7 +67,7 @@ function Servicios() {
             onSeleccionarServicio={manejarSeleccionarServicio}
           />
         </section>
-      </div>
+      </Container>
     </PlantillaPublica>
   );
 }
