@@ -1,110 +1,303 @@
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
+/* 1. VARIABLES GLOBALES Y TEMA VETERINARIO Variables globales y tema veterinaria */
 :root {
-  --vet-primary: #2a8d7f;
-  --vet-primary-hover: #118376;
-  --vet-bg: #f4f9f7;
+  /* Paleta principal */
+  --vet-primary: #1e7a68;
+  --vet-primary-hover: #15574a;
+  --vet-primary-light: #e8f5f2;
+  --vet-secondary: #5a6b7c;
+  --vet-dark: #202c39;
+  --vet-bg-light: #f5f8f7;
   --vet-card-bg: #ffffff;
-  --vet-border: #d0e5df;
-  --vet-text-dark: #1d352e;
-  --vet-text-muted: #829a92;
-  --vet-radius: 12px;
+  
+  /* Especies y Estados */
+  --vet-perro: #1e7a68;      
+  --vet-gato: #0284c7;     
+  --vet-exotico: #d97706;   
+  --vet-ave: #16a34a;        
+  --vet-cancelado: #dc2626;  
+
+  /* Tipografía y Sombras */
+  --vet-font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --vet-radius-sm: 8px;
+  --vet-radius-md: 12px;
+  --vet-radius-lg: 18px;
+  --vet-shadow-sm: 0 2px 8px rgba(32, 44, 57, 0.05);
+  --vet-shadow-md: 0 4px 16px rgba(32, 44, 57, 0.08);
+  --vet-shadow-lg: 0 8px 24px rgba(32, 44, 57, 0.12);
+  --vet-transition: all 0.25s ease-in-out;
+
+  /* Redefinición de variables CSS de Bootstrap */
+  --bs-primary: var(--vet-primary);
+  --bs-primary-rgb: 30, 122, 104;
+  --bs-body-font-family: var(--vet-font);
+  --bs-body-color: var(--vet-dark);
+  --bs-body-bg: var(--vet-bg-light);
+  --bs-border-radius: var(--vet-radius-sm);
+  --bs-border-radius-lg: var(--vet-radius-md);
 }
 
-/* Fondo principal */
-.login-pagina {
+body {
+  font-family: var(--vet-font);
+  color: var(--vet-dark);
+  background-color: var(--vet-bg-light);
   min-height: 100vh;
-  background-color: var(--vet-bg);
-  display: flex;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--vet-primary);
+  text-decoration: none;
+  transition: var(--vet-transition);
+}
+
+a:hover {
+  color: var(--vet-primary-hover);
+}
+
+.navbar.navbar-vet {
+  background-color: var(--vet-card-bg);
+  box-shadow: var(--vet-shadow-sm);
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  transition: var(--vet-transition);
+}
+
+.navbar-vet .navbar-brand {
+  color: var(--vet-primary);
+  font-size: 1.25rem;
+  transition: var(--vet-transition);
+}
+
+.navbar-vet .navbar-brand:hover {
+  color: var(--vet-primary-hover);
+}
+
+.navbar-vet .nav-link {
+  color: var(--vet-secondary);
+  font-weight: 5rem;
+  font-weight: 500;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--vet-radius-sm);
+  transition: var(--vet-transition);
+}
+
+.navbar-vet .nav-link:hover,
+.navbar-vet .nav-link.active {
+  color: var(--vet-primary);
+  background-color: var(--vet-primary-light);
+}
+
+button.btn, 
+.btn {
+  font-weight: 600;
+  border-radius: var(--vet-radius-sm);
+  padding: 0.55rem 1.2rem;
+  transition: var(--vet-transition);
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  gap: 0.4rem;
 }
 
-/* Tarjeta del formulario (Organismo) */
-.tarjeta-login {
-  background-color: var(--vet-card-bg);
-  border: 1px solid var(--vet-border);
-  border-radius: var(--vet-radius);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-  padding: 2.5rem 2rem;
-  width: 100%;
-  max-width: 380px;
-  margin: 0 auto;
-}
-
-/* Título */
-.titulo-login {
-  color: var(--vet-primary);
-  font-weight: 700;
-  font-size: 1.4rem;
-  margin-bottom: 1.75rem;
-  text-align: center;
-}
-
-/* Contenedor del campo (Molécula) */
-.campo-grupo {
-  margin-bottom: 1.25rem;
-  width: 100%;
-}
-
-.etiqueta-campo.form-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: var(--vet-text-dark);
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-align: left;
-}
-
-/* Input de texto (Átomo) */
-.campo-input.form-control {
-  display: block;
-  width: 100%;
-  border: 1px solid var(--vet-border);
-  border-radius: 8px;
-  padding: 0.625rem 0.875rem;
-  font-size: 0.925rem;
-  color: var(--vet-text-dark);
-  background-color: #ffffff;
-  box-shadow: none;
-  transition: border-color 0.2s ease;
-}
-
-.campo-input.form-control::placeholder {
-  color: var(--vet-text-muted);
-}
-
-.campo-input.form-control:focus {
-  border-color: var(--vet-primary);
-  background-color: #ffffff;
-  box-shadow: none;
-  outline: none;
-}
-
-/* Botón para enviar formulario (Átomo) */
-.btn-custom.btn-primary {
-  display: block;
-  width: 100%;
+button.btn-primary, 
+.btn-primary {
   background-color: var(--vet-primary);
-  border: none;
+  border-color: var(--vet-primary);
   color: #ffffff;
-  font-weight: 600;
-  font-size: 0.95rem;
-  padding: 0.75rem;
-  border-radius: 8px;
-  box-shadow: none;
-  transition: background-color 0.2s ease;
-  margin-top: 1.75rem;
 }
 
-.btn-custom.btn-primary:hover,
-.btn-custom.btn-primary:focus,
-.btn-custom.btn-primary:active {
+button.btn-primary:hover, 
+button.btn-primary:focus,
+.btn-primary:hover,
+.btn-primary:focus {
   background-color: var(--vet-primary-hover);
-  border: none;
+  border-color: var(--vet-primary-hover);
+  box-shadow: 0 4px 12px rgba(30, 122, 104, 0.25);
+}
+
+button.btn-outline-primary, 
+.btn-outline-primary {
+  color: var(--vet-primary);
+  border-color: var(--vet-primary);
+  background-color: transparent;
+}
+
+button.btn-outline-primary:hover, 
+.btn-outline-primary:hover {
+  background-color: var(--vet-primary);
+  border-color: var(--vet-primary);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(30, 122, 104, 0.2);
+}
+
+button.btn-lg,
+.btn-lg {
+  padding: 0.75rem 1.8rem;
+  font-size: 1.05rem;
+  border-radius: var(--vet-radius-md);
+}
+
+.campo-grupo .etiqueta-campo {
+  color: var(--vet-dark);
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+}
+
+.form-control.campo-input,
+.form-select.campo-input {
+  border: 1.5px solid #d1d5db;
+  border-radius: var(--vet-radius-sm);
+  padding: 0.6rem 0.85rem;
+  font-size: 0.95rem;
+  background-color: #ffffff;
+  color: var(--vet-dark);
+  transition: var(--vet-transition);
+}
+
+.form-control.campo-input:focus,
+.form-select.campo-input:focus {
+  border-color: var(--vet-primary);
+  box-shadow: 0 0 0 3px rgba(30, 122, 104, 0.15);
+  background-color: #ffffff;
+}
+
+.form-control.campo-input::placeholder {
+  color: #9ca3af;
+}
+
+.buscador-servicios .input-group-text {
+  background-color: #ffffff;
+  border: 1.5px solid #d1d5db;
+  border-right: none;
+  color: var(--vet-secondary);
+  border-top-left-radius: var(--vet-radius-sm);
+  border-bottom-left-radius: var(--vet-radius-sm);
+}
+
+.buscador-servicios .form-control.campo-input {
+  border-left: none;
+}
+
+.buscador-servicios .form-control.campo-input:focus {
+  border-color: #d1d5db;
   box-shadow: none;
-  outline: none;
+}
+
+.buscador-servicios .input-group:focus-within {
+  border-radius: var(--vet-radius-sm);
+  box-shadow: 0 0 0 3px rgba(30, 122, 104, 0.15);
+}
+
+.buscador-servicios .input-group:focus-within .input-group-text,
+.buscador-servicios .input-group:focus-within .campo-input {
+  border-color: var(--vet-primary);
+}
+
+.card.tarjeta-servicio {
+  border: 1px solid rgba(229, 231, 235, 0.8);
+  border-radius: var(--vet-radius-md);
+  background-color: var(--vet-card-bg);
+  transition: var(--vet-transition);
+  overflow: hidden;
+}
+
+.card.tarjeta-servicio:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--vet-shadow-md);
+  border-color: rgba(30, 122, 104, 0.3);
+}
+
+.card.tarjeta-servicio .card-title {
+  color: var(--vet-dark);
+  font-size: 1.15rem;
+  margin-top: 0.4rem;
+}
+
+.card.tarjeta-login {
+  border: none;
+  border-radius: var(--vet-radius-lg);
+  box-shadow: var(--vet-shadow-lg);
+  background-color: var(--vet-card-bg);
+}
+
+.tarjeta-login .titulo-login {
+  color: var(--vet-primary);
+  font-size: 1.6rem;
+}
+
+.login-pagina {
+  background: linear-gradient(135deg, #e8f5f2 0%, #f5f8f7 100%);
+}
+
+span.badge {
+  font-weight: 600;
+  padding: 0.4em 0.75em;
+  font-size: 0.78rem;
+  border-radius: 50rem;
+  letter-spacing: 0.02em;
+}
+
+/* Variantes para especies */
+span.badge.bg-primary {
+  background-color: var(--vet-perro);
+  color: #ffffff;
+}
+
+span.badge.bg-info {
+  background-color: var(--vet-gato);
+  color: #ffffff;
+}
+
+span.badge.bg-warning {
+  background-color: var(--vet-exotico);
+  color: #ffffff;
+}
+
+span.badge.bg-success {
+  background-color: var(--vet-ave);
+  color: #ffffff;
+}
+
+span.badge.bg-danger {
+  background-color: var(--vet-cancelado);
+  color: #ffffff;
+}
+
+span.badge.bg-secondary {
+  background-color: var(--vet-secondary);
+  color: #ffffff;
+}
+
+.icono {
+  vertical-align: middle;
+  stroke: currentColor;
+  flex-shrink: 0;
+}
+
+footer.bg-dark {
+  background-color: var(--vet-dark);
+  border-top: 3px solid var(--vet-primary);
+}
+
+footer h5, footer h6 {
+  letter-spacing: 0.03em;
+}
+
+footer .text-info {
+  color: #5eead4;
+}
+
+main.flex-grow-1 {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

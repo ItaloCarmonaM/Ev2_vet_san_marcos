@@ -9,7 +9,7 @@ import { normalizarTexto } from "../utils/formato";
 
 // Categorías sacadas del catálogo, sin repetir
 const CATEGORIAS = [...new Set(serviciosData.map((s) => s.categoria))].map(
-  (c) => ({ valor: c, texto: c })
+(c) => ({ valor: c, texto: c })
 );
 
 function Servicios() {
@@ -52,6 +52,7 @@ function Servicios() {
               <CampoFormulario
                 id="filtroCategoria"
                 name="categoria"
+                tipo="select"
                 opciones={CATEGORIAS}
                 placeholder="Todas las categorías"
                 valor={categoria}
