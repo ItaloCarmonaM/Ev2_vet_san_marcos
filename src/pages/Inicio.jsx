@@ -67,10 +67,12 @@ function Inicio() {
           <Row className="g-4">
             {destacados.map((s) => (
               <Col key={s.codigo} sm={6} lg={3}>
+
                 <TarjetaServicio
                   {...s}
-                  onSolicitar={() => navigate("/solicitar-cita")}
+                  onSolicitar={(codigo) => navigate(`/solicitar-cita/${codigo}`)}
                 />
+
               </Col>
             ))}
           </Row>
