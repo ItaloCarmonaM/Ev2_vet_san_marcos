@@ -1,26 +1,17 @@
-import { diaDeLaSemana, fechaHoy, horasDelDia } from "./horario";
-
-// Devuelve el texto del error de la fecha, o "" si está bien.
-export function errorDeFecha(fecha) {
-  if (!fecha) return "";
-  if (fecha < fechaHoy()) return "La fecha no puede ser anterior a hoy";
-  if (diaDeLaSemana(fecha) === 0) return "No atendemos los domingos";
+export function campoObligatorio(valor, nombreCampo = "Este campo") {
+  if (!String(valor ?? "").trim()) return `${nombreCampo} es obligatorio`;
   return "";
 }
 
-// Error de la hora (no existe ese día, ya pasó, o está ocupada)
-export function errorDeHora(fecha, hora, ocupadas) {
-  if (!hora) return "";
-  const opcion = horasDelDia(fecha, ocupadas).find((h) => h.valor === hora);
-  if (!opcion) return "La hora no está disponible para ese día";
-  if (opcion.deshabilitada) return "Esa hora ya está ocupada, elige otra";
+export function validarEmail(email) {
+  const texto = String(email ?? "").trim();
+  if (!texto) return "El correo es obligatorio";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(texto)) return "Ingresa un correo válido";
   return "";
 }
 
-// Valida todo junto. Devuelve el mensaje de error, o "" si está todo bien.
-export function validarFechaHora(fecha, hora, ocupadas) {
-  if (!fecha) return "Selecciona una fecha";
-  if (errorDeFecha(fecha)) return errorDeFecha(fecha);
-  if (!hora) return "Selecciona una hora";
-  return errorDeHora(fecha, hora, ocupadas);
+export function validarClave(clave) {
+  if (!clave) return "La contraseña es obligatoria";
+  if (clave.length < 6) return "La contraseña debe tener al menos 6 caracteres";
+  return "";
 }

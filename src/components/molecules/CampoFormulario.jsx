@@ -1,8 +1,9 @@
 import CampoTexto from "../atoms/CampoTexto";
-import Selector from "../atoms/Selector"; // NUEVO
+import Selector from "../atoms/Selector";
 
 function CampoFormulario(props) {
-  const esSelector = props.tipo === "select"; // NUEVO
+  const esSelector = props.tipo === "select" || Boolean(props.opciones);
+  const className = `${props.className || ""} ${props.error ? "is-invalid" : ""}`.trim();
 
   return (
     <div className="mb-3 campo-grupo">
@@ -11,11 +12,11 @@ function CampoFormulario(props) {
           {props.etiqueta}
         </label>
       )}
-      {esSelector ? ( // NUEVO
+      {esSelector ? (
         <Selector
           id={props.id}
           name={props.name}
-          className={props.className}
+          className={className}
           opciones={props.opciones}
           placeholder={props.placeholder}
           valor={props.valor}
@@ -26,7 +27,7 @@ function CampoFormulario(props) {
         <CampoTexto
           id={props.id}
           name={props.name}
-          className={props.className} // NUEVO
+          className={className}
           tipo={props.tipo}
           placeholder={props.placeholder}
           valor={props.valor}

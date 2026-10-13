@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { useTituloPagina } from "../hooks/useTituloPagina";
+import { normalizarTexto } from "../utils/formato";
 import PlantillaPublica from "../components/templates/PlantillaPublica";
 import BuscadorServicios from "../components/molecules/BuscadorServicios";
 import CampoFormulario from "../components/molecules/CampoFormulario";
 import ListaServicios from "../components/organisms/ListaServicios";
 import serviciosData from "../data/servicios";
-import { normalizarTexto } from "../utils/formato";
+
 
 // Categorías sacadas del catálogo, sin repetir
 const CATEGORIAS = [...new Set(serviciosData.map((s) => s.categoria))].map(
@@ -13,6 +15,7 @@ const CATEGORIAS = [...new Set(serviciosData.map((s) => s.categoria))].map(
 );
 
 function Servicios() {
+  useTituloPagina("Servicios");
   const [busqueda, setBusqueda] = useState("");
   const [categoria, setCategoria] = useState("");
 

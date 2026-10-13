@@ -1,5 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useTituloPagina } from "../hooks/useTituloPagina";
 import PlantillaPublica from "../components/templates/PlantillaPublica";
 import TarjetaServicio from "../components/molecules/TarjetaServicio";
 import Boton from "../components/atoms/Boton";
@@ -16,6 +17,7 @@ const CIFRAS = [
 
 function Inicio() {
   const navigate = useNavigate();
+  useTituloPagina("Inicio");
   const destacados = servicios.filter((s) => CODIGOS_DESTACADOS.includes(s.codigo));
 
   return (

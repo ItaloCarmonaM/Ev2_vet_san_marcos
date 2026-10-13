@@ -1,16 +1,18 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Inicio from "./pages/Inicio";
-import Login from "./pages/Login";
 import Servicios from "./pages/Servicios";
+import Login from "./pages/Login";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Inicio />} />
-      <Route path="/servicios" element={<Servicios />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Inicio />} />
+        <Route path="/servicios" element={<Servicios />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
