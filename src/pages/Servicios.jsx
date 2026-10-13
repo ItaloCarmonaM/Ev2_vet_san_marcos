@@ -7,15 +7,20 @@ import BuscadorServicios from "../components/molecules/BuscadorServicios";
 import CampoFormulario from "../components/molecules/CampoFormulario";
 import ListaServicios from "../components/organisms/ListaServicios";
 import serviciosData from "../data/servicios";
+import { useNavigate } from "react-router-dom";
 
-
-// Categorías sacadas del catálogo, sin repetir
 const CATEGORIAS = [...new Set(serviciosData.map((s) => s.categoria))].map(
 (c) => ({ valor: c, texto: c })
 );
 
 function Servicios() {
   useTituloPagina("Servicios");
+  const navigate = useNavigate();
+
+  function manejarSeleccionarServicio(servicio) {
+    navigate(`/solicitar-cita/${servicio.codigo}`);
+  }
+
   const [busqueda, setBusqueda] = useState("");
   const [categoria, setCategoria] = useState("");
 
