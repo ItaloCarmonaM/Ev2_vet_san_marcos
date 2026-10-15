@@ -2,8 +2,11 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Inicio from "./pages/Inicio";
 import Servicios from "./pages/Servicios";
 import Login from "./pages/Login";
+import Registro from "./pages/Registro";
 import SolicitarCita from "./pages/SolicitarCita";
 import CitaConfirmada from "./pages/CitaConfirmada";
+import AdminServicios from "./pages/AdminServicios";
+import AdminCitas from "./pages/AdminCitas";
 
 function App() {
   return (
@@ -15,6 +18,9 @@ function App() {
         <Route path="/" element={<Inicio />} />
         <Route path="/servicios" element={<Servicios />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Registro />} />
+        <Route path="/admin/servicios" element={<AdminServicios />} />
+        <Route path="/admin/citas" element={<AdminCitas />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
