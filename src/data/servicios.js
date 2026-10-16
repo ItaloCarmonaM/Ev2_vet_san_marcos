@@ -32,4 +32,6 @@ const servicios = [
   { codigo: "OT004", categoria: "Otros", nombre: "Hospitalización (por día)", especie: "Perro / Gato", duracion: "24 h", precio: 30000, observaciones: "Incluye monitoreo y alimentación básica" },
 ];
 
+export const CATEGORIAS = [...new Set(servicios.map((s) => s.categoria))];
+
 export default servicios;

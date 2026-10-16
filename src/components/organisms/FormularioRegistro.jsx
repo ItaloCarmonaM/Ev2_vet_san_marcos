@@ -1,89 +1,71 @@
 import { useState } from "react";
+import CampoFormulario from "../molecules/CampoFormulario";
+import Boton from "../atoms/Boton";
+import {
+  campoObligatorio,
+  validarEmail,
+  validarTelefono,
+  validarClave,
+  validarConfirmacion,
+} from "../../utils/validaciones";
 
-// Teléfono chileno: 9 dígitos que empiezan con 9, con +56 opcional.
-const TELEFONO_REGEX = /^(\+?56)?9\d{8}$/;
+const VALORES_INICIALES = { nombre: "", email: "", telefono: "", clave: "", confirmacion: "" };
 
-function validar({ nombre, email, telefono, password, confirmar }) {
-  const errores = {};
-
-  if (!nombre.trim()) errores.nombre = "Ingresa tu nombre.";
-
-  if (!/^\S+@\S+\.\S+$/.test(email)) errores.email = "Ingresa un correo válido.";
-
-  if (!TELEFONO_REGEX.test(telefono.replace(/\s/g, ""))) {
-    errores.telefono = "Teléfono inválido. Ejemplo: +56 9 1234 5678.";
-  }
-
-  if (password.length < 6) {
-    errores.password = "La contraseña debe tener al menos 6 caracteres.";
-  }
-
-  if (password !== confirmar) {
-    errores.confirmar = "Las contraseñas no coinciden.";
-  }
-
-  return errores;
-}
-
-export default function FormularioRegistro({ onRegistroExitoso }) {
-  const [valores, setValores] = useState({
-    nombre: "",
-    email: "",
-    telefono: "",
-    password: "",
-    confirmar: "",
-  });
+// Un solo useState para los valores: el name de cada campo es la clave.
+function FormularioRegistro(props) {
+  const [datos, setDatos] = useState(VALORES_INICIALES);
   const [errores, setErrores] = useState({});
 
-  const handleChange = (e) => {
+  function manejarCambio(e) {
     const { name, value } = e.target;
-    setValores((prev) => ({ ...prev, [name]: value }));
-  };
+    setDatos((anterior) => ({ ...anterior, [name]: value }));
+  }
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
-    const nuevosErrores = validar(valores);
-    setErrores(nuevosErrores);
 
-    if (Object.keys(nuevosErrores).length === 0) {
-      onRegistroExitoso?.(valores);
+    const nuevos = {
+      nombre: campoObligatorio(datos.nombre, "El nombre"),
+      email: validarEmail(datos.email),
+      telefono: validarTelefono(datos.telefono),
+      clave: validarClave(datos.clave),
+      confirmacion: validarConfirmacion(datos.clave, datos.confirmacion),
+    };
+    setErrores(nuevos);
+
+    const hayErrores = Object.values(nuevos).some((mensaje) => mensaje !== "");
+    if (!hayErrores && props.onRegistrar) {
+      props.onRegistrar({
+        nombre: datos.nombre.trim(),
+        email: datos.email.trim(),
+        telefono: datos.telefono,
+      });
     }
-  };
-
-  const campo = (name, label, placeholder, type = "text") => (
-    <div className="campo-grupo mb-3">
-      <label htmlFor={name} className="etiqueta-campo">
-        {label}
-      </label>
-      <input
-        id={name}
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        className={`form-control campo-input ${errores[name] ? "is-invalid" : ""}`}
-        value={valores[name]}
-        onChange={handleChange}
-        aria-invalid={Boolean(errores[name])}
-        aria-describedby={errores[name] ? `${name}-error` : undefined}
-      />
-      {errores[name] && (
-        <div id={`${name}-error`} role="alert">
-          {errores[name]}
-        </div>
-      )}
-    </div>
-  );
+  }
 
   return (
-    <form onSubmit={handleSubmit} noValidate>
-      {campo("nombre", "Nombre completo", "Ej: Camila Pérez")}
-      {campo("email", "Correo Electrónico", "ejemplo@ejemplo.com", "email")}
-      {campo("telefono", "Teléfono", "+56 9 1234 5678", "tel")}
-      {campo("password", "Contraseña", "Mínimo 6 caracteres", "password")}
-      {campo("confirmar", "Confirmar contraseña", "Repite tu contraseña", "password")}
-      <button type="submit" className="btn btn-primary w-100 mt-2">
-        Crear cuenta
-      </button>
+    <form onSubmit={handleSubmit} className="card p-4 tarjeta-login" noValidate>
+      <h3 className="titulo-login mb-3 text-center fw-bold">Crear cuenta</h3>
+
+      <CampoFormulario id="nombre" name="nombre" etiqueta="Nombre completo"
+        placeholder="Ej: María Pérez" valor={datos.nombre}
+        onChange={manejarCambio} error={errores.nombre} />
+      <CampoFormulario id="email" name="email" etiqueta="Correo Electrónico" tipo="email"
+        placeholder="ejemplo@ejemplo.com" valor={datos.email}
+        onChange={manejarCambio} error={errores.email} />
+      <CampoFormulario id="telefono" name="telefono" etiqueta="Teléfono" tipo="tel"
+        placeholder="+56 9 1234 5678" valor={datos.telefono}
+        onChange={manejarCambio} error={errores.telefono} />
+      <CampoFormulario id="clave" name="clave" etiqueta="Contraseña" tipo="password"
+        placeholder="Mínimo 6 caracteres" valor={datos.clave}
+        onChange={manejarCambio} error={errores.clave} />
+      <CampoFormulario id="confirmacion" name="confirmacion" etiqueta="Confirmar contraseña"
+        tipo="password" placeholder="Repite tu contraseña" valor={datos.confirmacion}
+        onChange={manejarCambio} error={errores.confirmacion} />
+
+      <Boton tipo="submit" texto="Registrarme" variante="primary" className="w-100 mt-2" />
     </form>
   );
 }
+
+export default FormularioRegistro;

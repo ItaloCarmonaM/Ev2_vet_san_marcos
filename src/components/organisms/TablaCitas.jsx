@@ -1,44 +1,35 @@
-const ESTADOS = ["Pendiente", "Confirmada", "Cancelada"];
+import FilaTablaCita from "../molecules/FilaTablaCita";
 
-export default function TablaCitas({ citas, onCambiarEstado }) {
+function TablaCitas(props) {
+  const citas = props.citas || [];
+
   if (citas.length === 0) {
-    return <p>No hay citas registradas.</p>;
+    return <p className="text-center text-muted py-5">No hay citas registradas.</p>;
   }
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Mascota</th>
-          <th>Especie</th>
-          <th>Servicio</th>
-          <th>Fecha</th>
-          <th>Hora</th>
-          <th>Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        {citas.map((cita) => (
-          <tr key={cita.id}>
-            <td>{cita.mascota}</td>
-            <td>{cita.especie}</td>
-            <td>{cita.servicio}</td>
-            <td>{cita.fecha}</td>
-            <td>{cita.hora}</td>
-            <td>
-              <select
-                aria-label={`Estado de la cita de ${cita.mascota}`}
-                value={cita.estado}
-                onChange={(e) => onCambiarEstado(cita.id, e.target.value)}
-              >
-                {ESTADOS.map((estado) => (
-                  <option key={estado} value={estado}>{estado}</option>
-                ))}
-              </select>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div className="card shadow-sm">
+      <div className="table-responsive">
+        <table className="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col">Fecha</th>
+              <th scope="col">Hora</th>
+              <th scope="col">Mascota</th>
+              <th scope="col">Servicio</th>
+              <th scope="col">Estado</th>
+              {props.onCambiarEstado && <th scope="col">Acciones</th>}
+            </tr>
+          </thead>
+          <tbody>
+            {citas.map((c) => (
+              <FilaTablaCita key={c.id} cita={c} onCambiarEstado={props.onCambiarEstado} />
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
+
+export default TablaCitas;

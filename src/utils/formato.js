@@ -17,3 +17,9 @@ export function normalizarTexto(texto) {
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
 }
+
+export function formatearFecha(fecha) {
+  if (!fecha) return "";
+  const [anio, mes, dia] = fecha.split("-");
+  return `${dia}-${mes}-${anio}`;
+}

@@ -1,34 +1,34 @@
 import { Container, Row, Col } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import FormularioRegistro from "../components/organisms/FormularioRegistro";
+import Boton from "../components/atoms/Boton";
 import { useTituloPagina } from "../hooks/useTituloPagina";
 
-export default function Registro() {
+function Registro() {
   const navigate = useNavigate();
   useTituloPagina("Crear cuenta");
 
-  const handleRegistroExitoso = (datos) => {
-    // Aquí iría la llamada a tu API con `datos`.
+  function alRegistrar() {
     navigate("/login");
-  };
+  }
 
   return (
     <div className="login-pagina">
       <Container className="d-flex align-items-center justify-content-center min-vh-100 py-4">
         <Row className="w-100 justify-content-center">
-          <Col xs={12} sm={9} md={6} lg={4}>
-            <div className="card tarjeta-login">
-              <div className="card-body p-4">
-                <h1 className="titulo-login fw-bold text-center mb-4">Crear Cuenta</h1>
-                <FormularioRegistro onRegistroExitoso={handleRegistroExitoso} />
-              </div>
-            </div>
-            <p className="text-center mt-3 mb-0">
-              ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
-            </p>
+          <Col xs={12} sm={10} md={7} lg={5}>
+            <FormularioRegistro onRegistrar={alRegistrar} />
+            <Boton
+              texto="¿Ya tienes cuenta? Inicia sesión"
+              variante="link"
+              className="w-100 mt-2"
+              onClick={() => navigate("/login")}
+            />
           </Col>
         </Row>
       </Container>
     </div>
   );
 }
+
+export default Registro;

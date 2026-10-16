@@ -1,4 +1,4 @@
-import { horasDelDia } from "./horario";
+import { diaDeLaSemana, horasDelDia } from "./horario";
 
 // Convierte "YYYY-MM-DD" en fecha local (evita el desfase de zona horaria)
 function parsearFecha(texto) {
@@ -21,6 +21,7 @@ export function errorDeFecha(fecha) {
   hoy.setHours(0, 0, 0, 0);
   if (elegida < hoy) return "La fecha no puede ser anterior a hoy.";
 
+  if (diaDeLaSemana(fecha) === 0) return "No atendemos los domingos.";
   return "";
 }
 

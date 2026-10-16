@@ -60,7 +60,7 @@ function FormularioSolicitudCita(props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="card p-4 shadow-sm" noValidate>
+    <form onSubmit={handleSubmit} className="card p-4 tarjeta-login" noValidate>
       <CampoFormulario
         id="mascota"
         name="mascota"

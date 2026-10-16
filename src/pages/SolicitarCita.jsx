@@ -28,7 +28,7 @@ function SolicitarCita() {
         </header>
 
         <Row className="justify-content-center">
-          <Col md={10} lg={7}>
+          <Col md={8} lg={5}>
             <FormularioSolicitudCita
               key={servicioInicial}
               servicios={servicios}

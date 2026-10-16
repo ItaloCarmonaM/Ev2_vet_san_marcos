@@ -1,81 +1,108 @@
 import { useState } from "react";
+import CampoFormulario from "../molecules/CampoFormulario";
+import Boton from "../atoms/Boton";
+import { CATEGORIAS } from "../../data/servicios";
+import { campoObligatorio, validarPrecio } from "../../utils/validaciones";
 
-const VACIO = { nombre: "", categoria: "", precio: "", descripcion: "" };
+const OPCIONES_CATEGORIA = CATEGORIAS.map((c) => ({ valor: c, texto: c }));
 
-export default function FormularioServicio({ servicio, onGuardar, onCancelar }) {
-  const [valores, setValores] = useState(servicio ?? VACIO);
+const VACIO = {
+  nombre: "",
+  categoria: "",
+  especie: "",
+  duracion: "",
+  precio: "",
+  observaciones: "",
+};
+
+function valoresDe(servicio) {
+  if (!servicio) return VACIO;
+  return {
+    nombre: servicio.nombre,
+    categoria: servicio.categoria,
+    especie: servicio.especie,
+    duracion: servicio.duracion,
+    precio: String(servicio.precio),
+    observaciones: servicio.observaciones || "",
+  };
+}
+
+function FormularioServicio(props) {
+  const editando = Boolean(props.servicio);
+  const [valores, setValores] = useState(valoresDe(props.servicio));
   const [errores, setErrores] = useState({});
 
-  const handleChange = (e) => {
+  function manejarCambio(e) {
     const { name, value } = e.target;
-    setValores((prev) => ({ ...prev, [name]: value }));
-  };
+    setValores((anterior) => ({ ...anterior, [name]: value }));
+  }
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
-    const nuevos = {};
-    if (!valores.nombre.trim()) nuevos.nombre = "Ingresa el nombre del servicio.";
-    if (!(Number(valores.precio) > 0)) nuevos.precio = "Ingresa un precio mayor a 0.";
+
+    const nuevos = {
+      nombre: campoObligatorio(valores.nombre, "El nombre"),
+      categoria: campoObligatorio(valores.categoria, "La categoría"),
+      especie: campoObligatorio(valores.especie, "La especie"),
+      duracion: campoObligatorio(valores.duracion, "La duración"),
+      precio: validarPrecio(valores.precio),
+    };
     setErrores(nuevos);
 
-    if (Object.keys(nuevos).length === 0) {
-      onGuardar({ ...valores, precio: Number(valores.precio) });
-    }
-  };
+    const hayErrores = Object.values(nuevos).some((mensaje) => mensaje !== "");
+    if (hayErrores || !props.onGuardar) return;
 
-  const campo = (name, etiqueta, placeholder, tipo = "text") => (
-    <div className="campo-grupo mb-3">
-      <label htmlFor={name} className="etiqueta-campo">
-        {etiqueta}
-      </label>
-      {tipo === "textarea" ? (
-        <textarea
-          id={name}
-          name={name}
-          rows={3}
-          placeholder={placeholder}
-          className="form-control campo-input"
-          value={valores[name]}
-          onChange={handleChange}
-        />
-      ) : (
-        <input
-          id={name}
-          name={name}
-          type={tipo}
-          placeholder={placeholder}
-          className={`form-control campo-input ${errores[name] ? "is-invalid" : ""}`}
-          value={valores[name]}
-          onChange={handleChange}
-        />
-      )}
-      {errores[name] && <div role="alert">{errores[name]}</div>}
-    </div>
-  );
+    props.onGuardar({
+      ...props.servicio,
+      nombre: valores.nombre.trim(),
+      categoria: valores.categoria,
+      especie: valores.especie.trim(),
+      duracion: valores.duracion.trim(),
+      precio: Number(valores.precio),
+      observaciones: valores.observaciones.trim(),
+    });
+
+    if (!editando) setValores(VACIO);
+  }
 
   return (
-    <div className="card tarjeta-login mb-4">
-      <div className="card-body p-4">
-        <h2 className="titulo-login fw-bold text-center mb-4">
-          {servicio ? "Editar Servicio" : "Nuevo Servicio"}
-        </h2>
-        <form onSubmit={handleSubmit} noValidate>
-          {campo("nombre", "Nombre del servicio", "Ej: Vacunación")}
-          {campo("categoria", "Categoría", "Ej: Prevención")}
-          {campo("precio", "Precio (CLP)", "12000", "number")}
-          {campo("descripcion", "Descripción", "Describe brevemente el servicio", "textarea")}
-          <div className="d-flex gap-2">
-            <button type="submit" className="btn btn-primary flex-grow-1">
-              {servicio ? "Guardar cambios" : "Agregar servicio"}
-            </button>
-            {servicio && (
-              <button type="button" className="btn btn-outline-primary" onClick={onCancelar}>
-                Cancelar
-              </button>
-            )}
-          </div>
-        </form>
+    <form onSubmit={handleSubmit} className="card p-4 tarjeta-login mb-4" noValidate>
+      <h2 className="titulo-login mb-3 text-center fw-bold">
+        {editando ? "Editar servicio" : "Nuevo servicio"}
+      </h2>
+
+      <CampoFormulario id="nombre" name="nombre" etiqueta="Nombre del servicio"
+        placeholder="Ej: Consulta general" valor={valores.nombre}
+        onChange={manejarCambio} error={errores.nombre} />
+      <CampoFormulario id="categoria" name="categoria" etiqueta="Categoría" tipo="select"
+        opciones={OPCIONES_CATEGORIA} placeholder="Selecciona una categoría"
+        valor={valores.categoria} onChange={manejarCambio} error={errores.categoria} />
+      <CampoFormulario id="especie" name="especie" etiqueta="Especie"
+        placeholder="Ej: Perro / Gato" valor={valores.especie}
+        onChange={manejarCambio} error={errores.especie} />
+      <CampoFormulario id="duracion" name="duracion" etiqueta="Duración"
+        placeholder="Ej: 30 min" valor={valores.duracion}
+        onChange={manejarCambio} error={errores.duracion} />
+      <CampoFormulario id="precio" name="precio" etiqueta="Precio (CLP)" tipo="number"
+        placeholder="12000" valor={valores.precio}
+        onChange={manejarCambio} error={errores.precio} />
+      <CampoFormulario id="observaciones" name="observaciones" etiqueta="Observaciones"
+        placeholder="Opcional" valor={valores.observaciones}
+        onChange={manejarCambio} />
+
+      <div className="d-flex gap-2 mt-2">
+        <Boton
+          tipo="submit"
+          texto={editando ? "Guardar cambios" : "Agregar servicio"}
+          variante="primary"
+          className="flex-grow-1"
+        />
+        {editando && props.onCancelar && (
+          <Boton texto="Cancelar" variante="outline-primary" onClick={props.onCancelar} />
+        )}
       </div>
-    </div>
+    </form>
   );
 }
+
+export default FormularioServicio;

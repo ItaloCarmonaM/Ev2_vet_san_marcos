@@ -34,3 +34,10 @@ export function validarTelefono(telefono) {
   }
   return "";
 }
+
+export function validarPrecio(precio) {
+  if (String(precio ?? "").trim() === "") return "El precio es obligatorio";
+  if (!(Number(precio) > 0)) return "Ingresa un precio mayor a 0";
+  return "";
+}
+

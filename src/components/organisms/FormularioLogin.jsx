@@ -24,7 +24,7 @@ function FormularioLogin(props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="card p-4 shadow-sm tarjeta-login" noValidate>
+    <form onSubmit={handleSubmit} className="card p-4 tarjeta-login" noValidate>
       <h3 className="titulo-login mb-3 text-center fw-bold">Iniciar Sesión</h3>
 
       <CampoFormulario
