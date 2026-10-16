@@ -23,34 +23,59 @@ export default function FormularioServicio({ servicio, onGuardar, onCancelar }) 
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit} noValidate>
-      <div className="campo">
-        <label htmlFor="nombre">Nombre</label>
-        <input id="nombre" name="nombre" value={valores.nombre} onChange={handleChange} />
-        {errores.nombre && <span role="alert" className="error">{errores.nombre}</span>}
-      </div>
-
-      <div className="campo">
-        <label htmlFor="categoria">Categoría</label>
-        <input id="categoria" name="categoria" value={valores.categoria} onChange={handleChange} />
-      </div>
-
-      <div className="campo">
-        <label htmlFor="precio">Precio</label>
-        <input id="precio" name="precio" type="number" value={valores.precio} onChange={handleChange} />
-        {errores.precio && <span role="alert" className="error">{errores.precio}</span>}
-      </div>
-
-      <div className="campo">
-        <label htmlFor="descripcion">Descripción</label>
-        <textarea id="descripcion" name="descripcion" value={valores.descripcion} onChange={handleChange} />
-      </div>
-
-      <button type="submit">{servicio ? "Guardar cambios" : "Agregar servicio"}</button>
-      {servicio && (
-        <button type="button" onClick={onCancelar}>Cancelar</button>
+  const campo = (name, etiqueta, placeholder, tipo = "text") => (
+    <div className="campo-grupo mb-3">
+      <label htmlFor={name} className="etiqueta-campo">
+        {etiqueta}
+      </label>
+      {tipo === "textarea" ? (
+        <textarea
+          id={name}
+          name={name}
+          rows={3}
+          placeholder={placeholder}
+          className="form-control campo-input"
+          value={valores[name]}
+          onChange={handleChange}
+        />
+      ) : (
+        <input
+          id={name}
+          name={name}
+          type={tipo}
+          placeholder={placeholder}
+          className={`form-control campo-input ${errores[name] ? "is-invalid" : ""}`}
+          value={valores[name]}
+          onChange={handleChange}
+        />
       )}
-    </form>
+      {errores[name] && <div role="alert">{errores[name]}</div>}
+    </div>
+  );
+
+  return (
+    <div className="card tarjeta-login mb-4">
+      <div className="card-body p-4">
+        <h2 className="titulo-login fw-bold text-center mb-4">
+          {servicio ? "Editar Servicio" : "Nuevo Servicio"}
+        </h2>
+        <form onSubmit={handleSubmit} noValidate>
+          {campo("nombre", "Nombre del servicio", "Ej: Vacunación")}
+          {campo("categoria", "Categoría", "Ej: Prevención")}
+          {campo("precio", "Precio (CLP)", "12000", "number")}
+          {campo("descripcion", "Descripción", "Describe brevemente el servicio", "textarea")}
+          <div className="d-flex gap-2">
+            <button type="submit" className="btn btn-primary flex-grow-1">
+              {servicio ? "Guardar cambios" : "Agregar servicio"}
+            </button>
+            {servicio && (
+              <button type="button" className="btn btn-outline-primary" onClick={onCancelar}>
+                Cancelar
+              </button>
+            )}
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }

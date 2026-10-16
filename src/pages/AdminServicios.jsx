@@ -39,31 +39,43 @@ export default function AdminServicios() {
       />
 
       {servicios.length === 0 ? (
-        <p>No hay servicios. Agrega el primero con el formulario.</p>
+        <p className="text-secondary text-center">
+          No hay servicios. Agrega el primero con el formulario.
+        </p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Categoría</th>
-              <th>Precio</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {servicios.map((s) => (
-              <tr key={s.id}>
-                <td>{s.nombre}</td>
-                <td>{s.categoria}</td>
-                <td>${s.precio.toLocaleString("es-CL")}</td>
-                <td>
-                  <button type="button" onClick={() => setEditando(s)}>Editar</button>
-                  <button type="button" onClick={() => eliminar(s.id)}>Eliminar</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="card border-0 shadow-sm">
+          <div className="table-responsive">
+            <table className="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Categoría</th>
+                  <th>Precio</th>
+                  <th className="text-end">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {servicios.map((s) => (
+                  <tr key={s.id}>
+                    <td className="fw-semibold">{s.nombre}</td>
+                    <td>{s.categoria}</td>
+                    <td>${s.precio.toLocaleString("es-CL")}</td>
+                    <td className="text-end">
+                      <div className="d-inline-flex gap-2">
+                        <button type="button" className="btn btn-outline-primary btn-sm" onClick={() => setEditando(s)}>
+                          Editar
+                        </button>
+                        <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => eliminar(s.id)}>
+                          Eliminar
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       )}
     </PlantillaAdmin>
   );
