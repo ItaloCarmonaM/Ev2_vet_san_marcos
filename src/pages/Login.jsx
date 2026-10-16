@@ -19,9 +19,15 @@ function Login() {
           <Col xs={12} sm={9} md={6} lg={4}>
             <FormularioLogin onLogin={alIniciarSesion} />
             <Boton
-              texto="Volver al inicio"
+              texto="¿No tienes cuenta? Regístrate"
               variante="link"
               className="w-100 mt-2"
+              onClick={() => navigate("/registro")}
+            />
+            <Boton
+              texto="Volver al inicio"
+              variante="link"
+              className="w-100"
               onClick={() => navigate("/")}
             />
           </Col>
