@@ -424,3 +424,37 @@ form button[type="submit"]:hover {
   border-color: var(--vet-primary-hover);
   box-shadow: 0 4px 12px rgba(30, 122, 104, 0.25);
 }
+/* ===== Formularios con el tamaño de la tarjeta del login ===== */
+.card.tarjeta-login {
+  width: 100%;
+  max-width: 408px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tarjeta-login .card-body {
+  padding: 1.5rem;
+}
+
+/* Los campos de dos o tres columnas pasan a una sola, como en el login */
+.tarjeta-login .row > [class*="col-"] {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+.tarjeta-login .titulo-login {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.tarjeta-login form .btn-primary,
+.tarjeta-login form button[type="submit"] {
+  width: 100%;
+  padding: 0.7rem 1.2rem;
+}
+
+.tarjeta-login form .d-flex {
+  flex-direction: column;
+}
