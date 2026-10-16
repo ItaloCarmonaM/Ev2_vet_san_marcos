@@ -50,34 +50,40 @@ export default function FormularioRegistro({ onRegistroExitoso }) {
     }
   };
 
-  const campo = (name, label, type = "text") => (
-    <div className="campo">
-      <label htmlFor={name}>{label}</label>
+  const campo = (name, label, placeholder, type = "text") => (
+    <div className="campo-grupo mb-3">
+      <label htmlFor={name} className="etiqueta-campo">
+        {label}
+      </label>
       <input
         id={name}
         name={name}
         type={type}
+        placeholder={placeholder}
+        className={`form-control campo-input ${errores[name] ? "is-invalid" : ""}`}
         value={valores[name]}
         onChange={handleChange}
         aria-invalid={Boolean(errores[name])}
         aria-describedby={errores[name] ? `${name}-error` : undefined}
       />
       {errores[name] && (
-        <span id={`${name}-error`} role="alert" className="error">
+        <div id={`${name}-error`} role="alert">
           {errores[name]}
-        </span>
+        </div>
       )}
     </div>
   );
 
   return (
     <form onSubmit={handleSubmit} noValidate>
-      {campo("nombre", "Nombre")}
-      {campo("email", "Correo", "email")}
-      {campo("telefono", "Teléfono", "tel")}
-      {campo("password", "Contraseña", "password")}
-      {campo("confirmar", "Confirmar contraseña", "password")}
-      <button type="submit">Crear cuenta</button>
+      {campo("nombre", "Nombre completo", "Ej: Camila Pérez")}
+      {campo("email", "Correo Electrónico", "ejemplo@ejemplo.com", "email")}
+      {campo("telefono", "Teléfono", "+56 9 1234 5678", "tel")}
+      {campo("password", "Contraseña", "Mínimo 6 caracteres", "password")}
+      {campo("confirmar", "Confirmar contraseña", "Repite tu contraseña", "password")}
+      <button type="submit" className="btn btn-primary w-100 mt-2">
+        Crear cuenta
+      </button>
     </form>
   );
 }
