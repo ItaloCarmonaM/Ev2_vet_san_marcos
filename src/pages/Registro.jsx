@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormularioRegistro from "../components/organisms/FormularioRegistro";
 
 export default function Registro() {
@@ -13,6 +13,9 @@ export default function Registro() {
     <main>
       <h1>Crear cuenta</h1>
       <FormularioRegistro onRegistroExitoso={handleRegistroExitoso} />
+      <p>
+        ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
+      </p>
     </main>
   );
 }
