@@ -7,6 +7,7 @@ const ENLACES_POR_DEFECTO = [
   { texto: "Inicio", ruta: "/" },
   { texto: "Servicios", ruta: "/servicios" },
   { texto: "Solicitar cita", ruta: "/solicitar-cita" },
+  { texto: "Admin", ruta: "/admin/servicios" },
 ];
 
 function Navbar(props) {
