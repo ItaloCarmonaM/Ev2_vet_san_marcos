@@ -7,6 +7,9 @@ import SolicitarCita from "./pages/SolicitarCita";
 import CitaConfirmada from "./pages/CitaConfirmada";
 import AdminServicios from "./pages/AdminServicios";
 import AdminCitas from "./pages/AdminCitas";
+import Categorias from './pages/Categorias';
+import DetalleServicio from './pages/DetalleServicio';
+
 
 function App() {
   return (
@@ -22,6 +25,9 @@ function App() {
         <Route path="/admin/servicios" element={<AdminServicios />} />
         <Route path="/admin/citas" element={<AdminCitas />} />
         <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/categorias" element={<Categorias />} />
+        <Route path="/servicio/:codigo" element={<DetalleServicio />} />
+
       </Routes>
     </BrowserRouter>
   );
