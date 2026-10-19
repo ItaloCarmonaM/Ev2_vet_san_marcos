@@ -17,10 +17,6 @@ function Servicios() {
   useTituloPagina("Servicios");
   const navigate = useNavigate();
 
-  function manejarSeleccionarServicio(servicio) {
-    navigate(`/solicitar-cita/${servicio.codigo}`);
-  }
-
   const [busqueda, setBusqueda] = useState("");
   const [categoria, setCategoria] = useState("");
 
@@ -35,7 +31,7 @@ function Servicios() {
   });
 
   function manejarSeleccionarServicio(servicio) {
-    alert(`Has seleccionado el servicio: ${servicio.nombre}`);
+    navigate(`/solicitar-cita/${servicio.codigo}`);
   }
 
   return (
