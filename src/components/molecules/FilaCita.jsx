@@ -1,12 +1,11 @@
 import EtiquetaEspecie from "../atoms/EtiquetaEspecie";
 import EtiquetaEstadoCita from "../atoms/EtiquetaEstadoCita";
 import Boton from "../atoms/Boton";
-import { separarEspecies, formatearFecha } from "../../utils/formato";
+import { separarEspecies, formatearFecha, nombreDeServicio } from "../../utils/formato";
 
 function FilaCita({ cita, onAccion }) {
   const { mascota, especie, fecha, hora, estado } = cita;
-  const nombreServicio =
-    typeof cita.servicio === "object" ? cita.servicio.nombre : cita.servicio;
+  const nombreServicio = nombreDeServicio(cita);
 
   return (
     <div className="card flex-row align-items-center justify-content-between p-3 mb-2">

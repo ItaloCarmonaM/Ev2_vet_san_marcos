@@ -25,7 +25,9 @@ function FormularioSolicitudCita(props) {
   }));
 
   function manejarCambio(e) {
-    setDatos({ ...datos, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setDatos((anterior) => ({ ...anterior, [name]: value }));
+    setErrores((anterior) => ({ ...anterior, [name]: "" }));
   }
 
   function handleSubmit(e) {

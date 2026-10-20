@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import AdminCitas from '../AdminCitas';
-import { renderEnRuta } from './utilsPrueba';
+import { renderEnRuta } from '../testUtils/renderEnRuta';
 
 const abrir = () => renderEnRuta(<AdminCitas />, { ruta: '/admin/citas', path: '/admin/citas' });
 const filaDe = (mascota) => screen.getByRole('cell', { name: new RegExp(mascota) }).closest('tr');

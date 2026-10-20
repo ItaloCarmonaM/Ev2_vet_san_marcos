@@ -1,24 +1,26 @@
 import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTituloPagina } from "../hooks/useTituloPagina";
 import { normalizarTexto } from "../utils/formato";
 import PlantillaPublica from "../components/templates/PlantillaPublica";
 import BuscadorServicios from "../components/molecules/BuscadorServicios";
 import CampoFormulario from "../components/molecules/CampoFormulario";
 import ListaServicios from "../components/organisms/ListaServicios";
-import serviciosData from "../data/servicios";
-import { useNavigate } from "react-router-dom";
+import serviciosData, { CATEGORIAS } from "../data/servicios";
 
-const CATEGORIAS = [...new Set(serviciosData.map((s) => s.categoria))].map(
-(c) => ({ valor: c, texto: c })
-);
+const OPCIONES_CATEGORIA = CATEGORIAS.map((c) => ({ valor: c, texto: c }));
 
 function Servicios() {
   useTituloPagina("Servicios");
   const navigate = useNavigate();
 
   const [busqueda, setBusqueda] = useState("");
-  const [categoria, setCategoria] = useState("");
+  const [params] = useSearchParams();
+  const categoriaUrl = params.get("categoria");
+  const [categoria, setCategoria] = useState(
+    CATEGORIAS.includes(categoriaUrl) ? categoriaUrl : ""
+  );
 
   const texto = normalizarTexto(busqueda.trim());
 
@@ -57,7 +59,7 @@ function Servicios() {
                 id="filtroCategoria"
                 name="categoria"
                 tipo="select"
-                opciones={CATEGORIAS}
+                opciones={OPCIONES_CATEGORIA}
                 placeholder="Todas las categorías"
                 valor={categoria}
                 onChange={(e) => setCategoria(e.target.value)}
@@ -70,6 +72,7 @@ function Servicios() {
           <ListaServicios
             servicios={serviciosFiltrados}
             onSeleccionarServicio={manejarSeleccionarServicio}
+            onVerDetalle={(s) => navigate(`/servicio/${s.codigo}`)}
           />
         </section>
       </Container>

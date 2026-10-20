@@ -29,6 +29,7 @@ const especies = separarEspecies(props.especie);
 
         <p className="fs-5 fw-bold mt-auto mb-3">${precio}</p>
 
+      <div className="d-flex flex-column gap-2">
         {props.onSolicitar && (
           <Boton
             texto="Solicitar cita"
@@ -37,6 +38,15 @@ const especies = separarEspecies(props.especie);
             onClick={() => props.onSolicitar(props.codigo)}
           />
         )}
+        {props.onVerDetalle && (
+          <Boton
+            texto="Ver detalle"
+            variante="outline-primary"
+            className="w-100"
+            onClick={() => props.onVerDetalle(props.codigo)}
+          />
+        )}
+      </div>
       </div>
     </div>
   );

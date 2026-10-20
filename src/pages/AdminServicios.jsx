@@ -4,7 +4,7 @@ import FormularioServicio from "../components/organisms/FormularioServicio";
 
 const INICIAL = [
   { id: 1, nombre: "Consulta general", categoria: "Consultas", especie: "Perro / Gato", duracion: "30 min", precio: 15000, descripcion: "Revisión general de la mascota." },
-  { id: 2, nombre: "Vacunación", categoria: "Prevención", especie: "Perro / Gato", duracion: "10 min", precio: 12000, descripcion: "Vacunas al día." },
+  { id: 2, nombre: "Vacunación", categoria: "Otros", especie: "Perro / Gato", duracion: "10 min", precio: 12000, descripcion: "Vacunas al día." },
 ];
 
 export default function AdminServicios() {

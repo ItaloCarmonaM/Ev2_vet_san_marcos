@@ -1,12 +1,13 @@
-import React from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import PlantillaPublica from '../components/templates/PlantillaPublica';
-import serviciosData from '../data/servicios';
+import { Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import PlantillaPublica from "../components/templates/PlantillaPublica";
+import Boton from "../components/atoms/Boton";
+import serviciosData, { CATEGORIAS } from "../data/servicios";
+import { useTituloPagina } from "../hooks/useTituloPagina";
 
 function Categorias() {
   const navigate = useNavigate();
-  const categoriasUnicas = [...new Set(serviciosData.map((s) => s.categoria))];
+  useTituloPagina("Categorías");
 
   return (
     <PlantillaPublica>
@@ -19,24 +20,23 @@ function Categorias() {
         </header>
 
         <Row className="g-4">
-          {categoriasUnicas.map((cat) => {
-            const serviciosCategoria = serviciosData.filter((s) => s.categoria === cat);
+          {CATEGORIAS.map((cat) => {
+            const cantidad = serviciosData.filter((s) => s.categoria === cat).length;
             return (
               <Col key={cat} xs={12} md={6} lg={4}>
-                <Card className="h-100 shadow-sm border-0">
-                  <Card.Body className="d-flex flex-column">
-                    <Card.Title className="fw-bold text-primary">{cat}</Card.Title>
-                    <Card.Text className="text-muted flex-grow-1">
-                      {serviciosCategoria.length} {serviciosCategoria.length === 1 ? 'servicio disponible' : 'servicios disponibles'} en esta categoría.
-                    </Card.Text>
-                    <Button
-                      variant="outline-primary"
+                <div className="card h-100 shadow-sm">
+                  <div className="card-body d-flex flex-column">
+                    <h2 className="h5 fw-bold text-primary">{cat}</h2>
+                    <p className="text-muted flex-grow-1">
+                      {cantidad} {cantidad === 1 ? "servicio disponible" : "servicios disponibles"} en esta categoría.
+                    </p>
+                    <Boton
+                      texto="Ver servicios"
+                      variante="outline-primary"
                       onClick={() => navigate(`/servicios?categoria=${encodeURIComponent(cat)}`)}
-                    >
-                      Ver servicios
-                    </Button>
-                  </Card.Body>
-                </Card>
+                    />
+                  </div>
+                </div>
               </Col>
             );
           })}

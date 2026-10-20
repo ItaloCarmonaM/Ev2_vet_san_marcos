@@ -1,7 +1,7 @@
 import EtiquetaEspecie from "../atoms/EtiquetaEspecie";
 import EtiquetaEstadoCita from "../atoms/EtiquetaEstadoCita";
 import Boton from "../atoms/Boton";
-import { separarEspecies, formatearFecha } from "../../utils/formato";
+import { separarEspecies, formatearFecha, nombreDeServicio } from "../../utils/formato";
 
 // Acciones disponibles según el estado actual de la cita
 const CANCELAR = { texto: "Cancelar", estado: "Cancelada", variante: "outline-danger" };
@@ -11,8 +11,7 @@ const ACCIONES = {
 };
 
 function FilaTablaCita({ cita, onCambiarEstado }) {
-  const nombreServicio =
-    typeof cita.servicio === "object" ? cita.servicio.nombre : cita.servicio;
+  const nombreServicio = nombreDeServicio(cita);
   const acciones = ACCIONES[cita.estado] || [];
 
   return (

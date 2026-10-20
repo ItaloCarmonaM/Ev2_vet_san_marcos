@@ -28,6 +28,9 @@ function ListaServicios(props) {
                 ? () => props.onSeleccionarServicio(s)
                 : undefined
             }
+            onVerDetalle={
+              props.onVerDetalle ? () => props.onVerDetalle(s) : undefined
+            }
           />
         </Col>
       ))}

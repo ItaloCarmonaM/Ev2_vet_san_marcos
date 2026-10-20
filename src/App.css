@@ -448,13 +448,3 @@ form button[type="submit"]:hover {
   font-weight: 700;
   margin-bottom: 1.5rem;
 }
-
-.tarjeta-login form .btn-primary,
-.tarjeta-login form button[type="submit"] {
-  width: 100%;
-  padding: 0.7rem 1.2rem;
-}
-
-.tarjeta-login form .d-flex {
-  flex-direction: column;
-}

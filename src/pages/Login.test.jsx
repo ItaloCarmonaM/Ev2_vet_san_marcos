@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Login from './Login';
-import { renderEnRuta } from './__tests__/utilsPrueba';
+import { renderEnRuta } from '../testUtils/renderEnRuta'
 
 describe('Página Login', () => {
   it('muestra errores si se envía vacío y no navega', async () => {

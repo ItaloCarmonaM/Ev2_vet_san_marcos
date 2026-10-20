@@ -70,7 +70,8 @@ function Inicio() {
 
                 <TarjetaServicio
                   {...s}
-                  onSolicitar={(codigo) => navigate(`/solicitar-cita/${codigo}`)}
+                    onSolicitar={(codigo) => navigate(`/solicitar-cita/${codigo}`)}
+                    onVerDetalle={(codigo) => navigate(`/servicio/${codigo}`)}
                 />
 
               </Col>
