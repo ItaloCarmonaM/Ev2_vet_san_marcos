@@ -31,7 +31,7 @@ function Categorias() {
                     </Card.Text>
                     <Button
                       variant="outline-primary"
-                      onClick={() => navigate(`/servicios`)}
+                      onClick={() => navigate(`/servicios?categoria=${encodeURIComponent(cat)}`)}
                     >
                       Ver servicios
                     </Button>

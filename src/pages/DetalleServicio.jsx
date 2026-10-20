@@ -8,7 +8,7 @@ function DetalleServicio() {
   const { codigo } = useParams();
   const navigate = useNavigate();
   const servicio = serviciosData.find((s) => s.codigo === codigo);
-
+  useTituloPagina(servicio ? servicio.nombre : "Servicio no encontrado");
   if (!servicio) {
     return (
       <PlantillaPublica>
@@ -40,10 +40,10 @@ function DetalleServicio() {
                   <strong>Especie:</strong> {servicio.especie}
                 </p>
                 <p className="fs-5 mb-3">
-                  <strong>Duración aproximada:</strong> {servicio.duracion} min
+                  <strong>Duración aproximada:</strong> {servicio.duracion}
                 </p>
                 <p className="fs-5 mb-3 text-success fw-bold">
-                  <strong>Precio:</strong> ${Number(servicio.precio).toLocaleString('es-CL')} CLP
+                  <strong>Precio:</strong> ${formatearPrecio(calcularPrecioServicio(servicio))} CLP
                 </p>
                 {servicio.observaciones && (
                   <p className="fs-6 text-muted mb-4">
