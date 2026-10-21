@@ -2,7 +2,9 @@ import { describe, it, expect } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Routes, Route, useLocation } from 'react-router-dom';
-import SolicitarCita from '../SolicitarCita';
+import SolicitarCita from './SolicitarCita';
+import { ServiciosProvider } from "../context/ServiciosContext"
+import { CitasProvider } from "../context/CitasContext"
 
 function Destino() {
   const { pathname, state } = useLocation();
@@ -17,13 +19,17 @@ function Destino() {
 
 function abrir(ruta = '/solicitar-cita') {
   return render(
-    <MemoryRouter initialEntries={[ruta]}>
-      <Routes>
-        <Route path="/solicitar-cita" element={<SolicitarCita />} />
-        <Route path="/solicitar-cita/:codigo" element={<SolicitarCita />} />
-        <Route path="/cita-confirmada" element={<Destino />} />
-      </Routes>
-    </MemoryRouter>
+    <ServiciosProvider>
+      <CitasProvider>
+        <MemoryRouter initialEntries={[ruta]}>
+          <Routes>
+            <Route path="/solicitar-cita" element={<SolicitarCita />} />
+            <Route path="/solicitar-cita/:codigo" element={<SolicitarCita />} />
+            <Route path="/cita-confirmada" element={<Destino />} />
+          </Routes>
+        </MemoryRouter>
+      </CitasProvider>
+    </ServiciosProvider>
   );
 }
 

@@ -5,7 +5,7 @@ import PlantillaPublica from "../components/templates/PlantillaPublica";
 import TarjetaServicio from "../components/molecules/TarjetaServicio";
 import Boton from "../components/atoms/Boton";
 import Icono from "../components/atoms/Icono";
-import servicios from "../data/servicios";
+import { useServicios } from "../hooks/useServicios";
 
 const CODIGOS_DESTACADOS = ["SV001", "VA002", "EX004", "OT002"];
 
@@ -17,6 +17,7 @@ const CIFRAS = [
 
 function Inicio() {
   const navigate = useNavigate();
+  const { servicios } = useServicios();
   useTituloPagina("Inicio");
   const destacados = servicios.filter((s) => CODIGOS_DESTACADOS.includes(s.codigo));
 

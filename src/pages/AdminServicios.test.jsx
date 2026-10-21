@@ -1,10 +1,15 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import AdminServicios from '../AdminServicios';
-import { renderEnRuta } from '../testUtils/renderEnRuta';
+import AdminServicios from './AdminServicios';
+import { renderEnRuta } from "../testUtils/renderEnRuta"
 
-const abrir = () => renderEnRuta(<AdminServicios />, { ruta: '/admin/servicios', path: '/admin/servicios' });
+const INICIALES = [
+  { codigo: 'SV001', nombre: 'Consulta general', categoria: 'Consultas', especie: 'Perro / Gato', duracion: '30 min', precio: 15000, observaciones: '' },
+  { codigo: 'VA001', nombre: 'Vacunación', categoria: 'Otros', especie: 'Perro / Gato', duracion: '10 min', precio: 12000, observaciones: '' },
+];
+
+const abrir = () => renderEnRuta(<AdminServicios />, { ruta: '/admin/servicios', path: '/admin/servicios', servicios: INICIALES });
 
 afterEach(() => vi.restoreAllMocks());
 

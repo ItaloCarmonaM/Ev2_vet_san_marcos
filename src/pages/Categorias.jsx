@@ -2,11 +2,13 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import PlantillaPublica from "../components/templates/PlantillaPublica";
 import Boton from "../components/atoms/Boton";
-import serviciosData, { CATEGORIAS } from "../data/servicios";
+import { CATEGORIAS } from "../data/servicios";
+import { useServicios } from "../hooks/useServicios";
 import { useTituloPagina } from "../hooks/useTituloPagina";
 
 function Categorias() {
   const navigate = useNavigate();
+  const { servicios } = useServicios();
   useTituloPagina("Categorías");
 
   return (
@@ -21,7 +23,7 @@ function Categorias() {
 
         <Row className="g-4">
           {CATEGORIAS.map((cat) => {
-            const cantidad = serviciosData.filter((s) => s.categoria === cat).length;
+            const cantidad = servicios.filter((s) => s.categoria === cat).length;
             return (
               <Col key={cat} xs={12} md={6} lg={4}>
                 <div className="card h-100 shadow-sm">

@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Servicios from '../Servicios';
-import servicios from '../../data/servicios';
-import { renderEnRuta } from '../testUtils/renderEnRuta';
+import Servicios from './Servicios';
+import servicios from "../data/servicios"
+import { renderEnRuta } from "../testUtils/renderEnRuta"
 
 describe('Página Servicios', () => {
   it('lista todo el catálogo al inicio', () => {

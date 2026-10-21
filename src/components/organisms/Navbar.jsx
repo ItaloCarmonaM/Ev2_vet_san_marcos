@@ -6,9 +6,10 @@ import Boton from "../atoms/Boton";
 const ENLACES_POR_DEFECTO = [
   { texto: "Inicio", ruta: "/" },
   { texto: "Servicios", ruta: "/servicios" },
-  { texto: "Solicitar cita", ruta: "/solicitar-cita" },
-  { texto: "Admin", ruta: "/admin/servicios" },
   { texto: "Categorías", ruta: "/categorias" },
+  { texto: "Solicitar cita", ruta: "/solicitar-cita" },
+  { texto: "Mis citas", ruta: "/mis-citas" },
+  { texto: "Admin", ruta: "/admin/servicios" },
 ];
 
 function Navbar(props) {

@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import PlantillaPublica from "../components/templates/PlantillaPublica";
 import Boton from "../components/atoms/Boton";
 import EtiquetaEspecie from "../components/atoms/EtiquetaEspecie";
-import serviciosData from "../data/servicios";
+import { useServicios } from "../hooks/useServicios";
 import { useTituloPagina } from "../hooks/useTituloPagina";
 import { formatearPrecio, separarEspecies } from "../utils/formato";
 import { calcularPrecioServicio } from "../utils/precios";
@@ -11,7 +11,8 @@ import { calcularPrecioServicio } from "../utils/precios";
 function DetalleServicio() {
   const { codigo } = useParams();
   const navigate = useNavigate();
-  const servicio = serviciosData.find((s) => s.codigo === codigo);
+  const { servicios } = useServicios();
+  const servicio = servicios.find((s) => s.codigo === codigo);
   useTituloPagina(servicio ? servicio.nombre : "Servicio no encontrado");
 
   if (!servicio) {

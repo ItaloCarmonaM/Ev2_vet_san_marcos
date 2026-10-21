@@ -1,18 +1,14 @@
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import PlantillaPublica from "../components/templates/PlantillaPublica";
-import TablaCitas from "../components/organisms/TablaCitas";
+import ListaMisCitas from "../components/organisms/ListaMisCitas";
 import Boton from "../components/atoms/Boton";
-import citas from "../data/citas";
+import { useCitas } from "../hooks/useCitas";
 import { useTituloPagina } from "../hooks/useTituloPagina";
-
-// Ordenadas por fecha y hora
-const ordenadas = [...citas].sort((a, b) =>
-  `${a.fecha} ${a.hora}`.localeCompare(`${b.fecha} ${b.hora}`)
-);
 
 function MisCitas() {
   const navigate = useNavigate();
+  const { citas } = useCitas();
   useTituloPagina("Mis citas");
 
   return (
@@ -23,7 +19,7 @@ function MisCitas() {
           <Boton texto="Solicitar cita" onClick={() => navigate("/solicitar-cita")} />
         </header>
 
-        <TablaCitas citas={ordenadas} />
+        <ListaMisCitas citas={citas} onSolicitar={() => navigate("/solicitar-cita")} />
       </Container>
     </PlantillaPublica>
   );

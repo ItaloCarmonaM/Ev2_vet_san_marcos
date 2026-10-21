@@ -1,38 +1,34 @@
 import { useState } from "react";
 import PlantillaAdmin from "../components/templates/PlantillaAdmin";
 import FormularioServicio from "../components/organisms/FormularioServicio";
-
-const INICIAL = [
-  { id: 1, nombre: "Consulta general", categoria: "Consultas", especie: "Perro / Gato", duracion: "30 min", precio: 15000, descripcion: "Revisión general de la mascota." },
-  { id: 2, nombre: "Vacunación", categoria: "Otros", especie: "Perro / Gato", duracion: "10 min", precio: 12000, descripcion: "Vacunas al día." },
-];
+import Boton from "../components/atoms/Boton";
+import { useServicios } from "../hooks/useServicios";
+import { formatearPrecio } from "../utils/formato";
 
 export default function AdminServicios() {
-  const [servicios, setServicios] = useState(INICIAL);
+  const { servicios, agregarServicio, actualizarServicio, eliminarServicio } = useServicios();
   const [editando, setEditando] = useState(null);
 
-  const guardar = (datos) => {
+  function guardar(datos) {
     if (editando) {
-      setServicios((prev) =>
-        prev.map((s) => (s.id === editando.id ? { ...s, ...datos } : s))
-      );
+      actualizarServicio(editando.codigo, datos);
       setEditando(null);
     } else {
-      setServicios((prev) => [...prev, { ...datos, id: Date.now() }]);
+      agregarServicio(datos);
     }
-  };
+  }
 
-  const eliminar = (id) => {
+  function eliminar(codigo) {
     if (window.confirm("¿Eliminar este servicio?")) {
-      setServicios((prev) => prev.filter((s) => s.id !== id));
-      if (editando?.id === id) setEditando(null);
+      eliminarServicio(codigo);
+      if (editando?.codigo === codigo) setEditando(null);
     }
-  };
+  }
 
   return (
     <PlantillaAdmin titulo="Administrar servicios">
       <FormularioServicio
-        key={editando?.id ?? "nuevo"}
+        key={editando?.codigo ?? "nuevo"}
         servicio={editando}
         onGuardar={guardar}
         onCancelar={() => setEditando(null)}
@@ -43,11 +39,12 @@ export default function AdminServicios() {
           No hay servicios. Agrega el primero con el formulario.
         </p>
       ) : (
-        <div className="card border-0 shadow-sm">
+        <div className="card shadow-sm">
           <div className="table-responsive">
             <table className="table table-hover align-middle mb-0">
               <thead>
                 <tr>
+                  <th>Código</th>
                   <th>Nombre</th>
                   <th>Categoría</th>
                   <th>Precio</th>
@@ -56,18 +53,15 @@ export default function AdminServicios() {
               </thead>
               <tbody>
                 {servicios.map((s) => (
-                  <tr key={s.id}>
+                  <tr key={s.codigo}>
+                    <td className="font-monospace">{s.codigo}</td>
                     <td className="fw-semibold">{s.nombre}</td>
                     <td>{s.categoria}</td>
-                    <td>${s.precio.toLocaleString("es-CL")}</td>
+                    <td>${formatearPrecio(s.precio)}</td>
                     <td className="text-end">
                       <div className="d-inline-flex gap-2">
-                        <button type="button" className="btn btn-outline-primary btn-sm" onClick={() => setEditando(s)}>
-                          Editar
-                        </button>
-                        <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => eliminar(s.id)}>
-                          Eliminar
-                        </button>
+                        <Boton texto="Editar" variante="outline-primary" className="btn-sm" onClick={() => setEditando(s)} />
+                        <Boton texto="Eliminar" variante="outline-danger" className="btn-sm" onClick={() => eliminar(s.codigo)} />
                       </div>
                     </td>
                   </tr>

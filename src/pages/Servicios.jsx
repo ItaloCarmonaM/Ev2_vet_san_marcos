@@ -7,14 +7,15 @@ import PlantillaPublica from "../components/templates/PlantillaPublica";
 import BuscadorServicios from "../components/molecules/BuscadorServicios";
 import CampoFormulario from "../components/molecules/CampoFormulario";
 import ListaServicios from "../components/organisms/ListaServicios";
-import serviciosData, { CATEGORIAS } from "../data/servicios";
+import { CATEGORIAS } from "../data/servicios";
+import { useServicios } from "../hooks/useServicios";
 
 const OPCIONES_CATEGORIA = CATEGORIAS.map((c) => ({ valor: c, texto: c }));
 
 function Servicios() {
   useTituloPagina("Servicios");
   const navigate = useNavigate();
-
+  const { servicios } = useServicios();
   const [busqueda, setBusqueda] = useState("");
   const [params] = useSearchParams();
   const categoriaUrl = params.get("categoria");
@@ -24,7 +25,7 @@ function Servicios() {
 
   const texto = normalizarTexto(busqueda.trim());
 
-  const serviciosFiltrados = serviciosData.filter((s) => {
+  const serviciosFiltrados = servicios.filter((s) => {
     const coincideTexto =
       normalizarTexto(s.nombre).includes(texto) ||
       normalizarTexto(s.observaciones).includes(texto);

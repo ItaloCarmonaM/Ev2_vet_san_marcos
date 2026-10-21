@@ -2,19 +2,24 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import PlantillaPublica from "../components/templates/PlantillaPublica";
 import FormularioSolicitudCita from "../components/organisms/FormularioSolicitudCita";
-import servicios from "../data/servicios";
+import { useServicios } from "../hooks/useServicios";
+import { useCitas } from "../hooks/useCitas";
 import { useTituloPagina } from "../hooks/useTituloPagina";
 
 function SolicitarCita() {
   const navigate = useNavigate();
   const params = useParams();
+  const { servicios } = useServicios();
+  const { ocupadas, agregarCita } = useCitas();
   useTituloPagina("Solicitar cita");
 
   const existe = servicios.some((s) => s.codigo === params.codigo);
   const servicioInicial = existe ? params.codigo : "";
 
+  // La cita queda guardada (como Pendiente) y se muestra en la confirmación
   function alSolicitar(cita) {
-    navigate("/cita-confirmada", { state: { cita: { ...cita, estado: "Pendiente" } } });
+    const nueva = agregarCita(cita);
+    navigate("/cita-confirmada", { state: { cita: nueva } });
   }
 
   return (
@@ -33,7 +38,7 @@ function SolicitarCita() {
               key={servicioInicial}
               servicios={servicios}
               servicioInicial={servicioInicial}
-              ocupadas={[]}
+              ocupadas={ocupadas}
               onSolicitar={alSolicitar}
             />
           </Col>
