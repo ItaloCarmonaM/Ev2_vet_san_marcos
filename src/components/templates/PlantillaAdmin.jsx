@@ -2,25 +2,21 @@ import { Container } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../organisms/Navbar";
 import { useTituloPagina } from "../../hooks/useTituloPagina";
+import { PERFILES } from "../../data/perfiles";
 
-const ENLACES_ADMIN = [
-  { texto: "Servicios", ruta: "/admin/servicios" },
-  { texto: "Citas", ruta: "/admin/citas" },
-  { texto: "Ver sitio", ruta: "/" },
-];
-
-export default function PlantillaAdmin({ titulo, children }) {
+export default function PlantillaAdmin({ titulo, perfil = "admin", children }) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { enlaces, usuario } = PERFILES[perfil];
   useTituloPagina(titulo);
 
   return (
     <div className="d-flex flex-column min-vh-100">
       <Navbar
-        enlaces={ENLACES_ADMIN}
+        enlaces={enlaces}
         rutaActual={pathname}
         onNavegar={navigate}
-        usuario="Administrador"
+        usuario={usuario}
         onCerrarSesion={() => navigate("/login")}
       />
       <main className="flex-grow-1 py-4">

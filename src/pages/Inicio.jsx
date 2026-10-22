@@ -6,6 +6,7 @@ import TarjetaServicio from "../components/molecules/TarjetaServicio";
 import Boton from "../components/atoms/Boton";
 import Icono from "../components/atoms/Icono";
 import { useServicios } from "../hooks/useServicios";
+import MapaUbicacion from "../components/organisms/MapaUbicacion";
 
 const CODIGOS_DESTACADOS = ["SV001", "VA002", "EX004", "OT002"];
 
@@ -85,6 +86,17 @@ function Inicio() {
               onClick={() => navigate("/servicios")}
             />
           </div>
+        </Container>
+      </section>
+      
+      {/* Ubicación */}
+      <section className="py-5">
+        <Container>
+          <h2 className="fw-bold text-center mb-2">Nuestra ubicación</h2>
+          <p className="text-center text-muted mb-4">
+            Nos encontramos en Rancagua. ¡Ven a visitarnos con tu mascota!
+          </p>
+          <MapaUbicacion />
         </Container>
       </section>
     </PlantillaPublica>

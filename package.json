@@ -4,14 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "test": "vitest",
-  "test:run": "vitest run",
-  "test:cov": "vitest run --coverage"
-},
+    "dev": "vite",
+    "build": "vite build",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:cov": "vitest run --coverage"
+  },
   "dependencies": {
     "bootstrap": "^5.3.8",
+    "leaflet": "^1.9.4",
     "react": "^19.2.8",
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.2.8",

@@ -1,8 +1,10 @@
 import CampoTexto from "../atoms/CampoTexto";
 import Selector from "../atoms/Selector";
+import AreaTexto from "../atoms/AreaTexto";
 
 function CampoFormulario(props) {
   const esSelector = props.tipo === "select" || Boolean(props.opciones);
+  const esAreaTexto = props.tipo === "textarea";
   const className = `${props.className || ""} ${props.error ? "is-invalid" : ""}`.trim();
 
   return (
@@ -22,6 +24,16 @@ function CampoFormulario(props) {
           valor={props.valor}
           onChange={props.onChange}
           requerido={props.requerido}
+        />
+      ) : esAreaTexto ? (
+        <AreaTexto
+          id={props.id}
+          name={props.name}
+          className={className}
+          filas={props.filas}
+          placeholder={props.placeholder}
+          valor={props.valor}
+          onChange={props.onChange}
         />
       ) : (
         <CampoTexto

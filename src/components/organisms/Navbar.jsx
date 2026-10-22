@@ -9,6 +9,8 @@ const ENLACES_POR_DEFECTO = [
   { texto: "Categorías", ruta: "/categorias" },
   { texto: "Solicitar cita", ruta: "/solicitar-cita" },
   { texto: "Mis citas", ruta: "/mis-citas" },
+  { texto: "Vacunas", ruta: "/mis-vacunas" },
+  { texto: "Veterinario", ruta: "/veterinario" },
   { texto: "Admin", ruta: "/admin/servicios" },
 ];
 
