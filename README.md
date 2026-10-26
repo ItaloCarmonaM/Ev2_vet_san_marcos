@@ -1,9 +1,11 @@
-# Grupo 2
+# Veterinaria San Marcos
+
+Proyecto del **Grupo 2**: sitio web de una veterinaria, desarrollado como frontend en React.
 
 ## Integrantes
-- Ítalo Carmona (it.carmona@duocuc.cl)
-- Camilo Peña (ca.penag@duocuc.cl)
-- Matías Yañez (mat.yanezt@duocuc.cl)
+- Ítalo Carmona (it.carmona@duocuc.cl), cuenta de GitHub `ItaloCarmonaM`
+- Camilo Peña (ca.penag@duocuc.cl), cuentas de GitHub `lokiinsano` y `archivohtml`
+- Matías Yañez (mat.yanezt@duocuc.cl), cuenta de GitHub `Matiasytorres`
 
 ## Caso Veterinaria San Marcos
 Este consta de una veterinaria de mascotas domésticas que acepta perros, gatos, conejos y aves.
@@ -43,7 +45,7 @@ historial de pacientes y agendar nuevas citas.
 - Componentes organizados con **Atomic Design** (átomos, moléculas, organismos, plantillas y páginas).
 - Estado global con **Context API**: `ServiciosContext`, `CitasContext` y `PacientesContext`, con sus hooks `useServicios`, `useCitas` y `usePacientes`.
 - Los datos son simulados y viven en memoria (`src/data`), por lo que se reinician al recargar la página. No hay backend.
-- Utilidades puras y probadas en `src/utils`: horario, precios, formato, validaciones, códigos de servicio, vacunas y pacientes.
+- Utilidades puras en `src/utils`: horario, precios, formato, validaciones, códigos de servicio, vacunas y pacientes. Las de horario, precios, formato y validaciones tienen pruebas.
 
 ## Estructura del proyecto
 ```
@@ -83,15 +85,31 @@ Qué cubren:
 - **Componentes**: EtiquetaEspecie, TarjetaServicio y FormularioLogin.
 - **Páginas**: Login, Servicios, SolicitarCita, AdminCitas y AdminServicios (validaciones, navegación y flujos completos).
 
+### Cobertura
+- Cobertura global: **55,46 %** (reporte generado el 26-10-2026).
+- La carpeta `coverage/` está en el `.gitignore`, por lo que no se sube al repositorio. Para verla, ejecutar `npm run test:cov` y abrir `coverage/index.html`.
+- Aún sin pruebas: el módulo del veterinario (`PanelVeterinario`, `FichaPaciente` y sus componentes), el mapa (`MapaUbicacion`), las utilidades `codigos`, `vacunas` y `pacientes`, y varias páginas (Inicio, Registro, MisCitas, MisVacunas, Categorías y Detalle de servicio).
+
 ## Errores corregidos durante las pruebas
 - `Servicios.jsx` tenía la función `manejarSeleccionarServicio` declarada dos veces. La segunda, que solo mostraba un `alert`, pisaba a la que navegaba, y "Solicitar cita" no llevaba al formulario.
 - Los servicios iniciales de `AdminServicios` no tenían `especie` ni `duracion`, así que no se podían editar y guardar.
 
+## Aportes por integrante
+Según los commits del repositorio hasta el 25-10-2026 (65 en total).
+
+| Integrante | Commits | Aportes principales |
+|---|---|---|
+| Ítalo Carmona | 19 | Estructura inicial, Navbar, plantilla pública, rutas y router, login, contextos de citas y servicios, Mis citas, mapa con Leaflet, alertas de vacunación y vista del veterinario |
+| Matías Yañez | 11 | Átomos de etiquetas, FilaCita, página de Servicios, flujo de Solicitar cita y Cita confirmada, Categorías y Detalle de servicio, configuración de Vitest y pruebas de utilidades |
+| Camilo Peña | 35 | Utilidades (horario, validaciones, precios, formato), catálogo de servicios desde el Excel, ListaServicios, Selector, Icono y SelectorFechaHora, registro, vista de administración, estilos, pruebas de páginas, corrección de errores y README |
+
 ## Bitácora de cambios
-Registro de los 63 commits del repositorio, ordenado por fecha (formato dd-mm-aaaa).
+Registro de los 65 commits del repositorio hasta el 25-10-2026, ordenado por fecha (formato dd-mm-aaaa).
+Las fechas pueden diferir en un día de las que muestra GitHub, según la zona horaria.
+Los commits de la cuenta `archivohtml` corresponden a Camilo Peña.
 
 ### 21-09-2026 (1 commit)
-- `1842d1a` **Ítalo Carmona**: Inicialización proyecto veterinaria San marcos
+- `1842d1a` **Ítalo Carmona**: Inicialización proyecto veterinaria San Carlos
 
 ### 22-09-2026 (3 commits)
 - `e9c7928` **Ítalo Carmona**: Creación de README. Implementación básica de estructura página de inicio de sesión con dos átomos
@@ -102,7 +120,7 @@ Registro de los 63 commits del repositorio, ordenado por fecha (formato dd-mm-aa
 - `17499e3` **Ítalo Carmona**: Se cambió estructura de botón e InputTexto para seguir estructura recomendada
 - `2f6ef72` **Matías Yañez**: Atomos etiquetaestadocita y etiquetaespecie
 - `58c05d9` **Ítalo Carmona**: Se corrigieron problemas con las importaciones
-- `aef2ae1` **Camilo Peña**: feat(atoms):  agrega Selector con props id, name y className
+- `aef2ae1` **Camilo Peña**: feat(atoms): agrega Selector con props id, name y className
 - `e34cfde` **Camilo Peña**: feat(atoms): agrega Icono con className e ícono por defecto
 - `67cb4a9` **Camilo Peña**: feat(molecules): CampoFormulario acepta Selector con tipo select y className
 - `27e300b` **Ítalo Carmona**: Creación moleculas BuscadorServicios y TarjetaServicio
@@ -111,14 +129,14 @@ Registro de los 63 commits del repositorio, ordenado por fecha (formato dd-mm-aa
 - `4d2926f` **Camilo Peña**: feat(pages): agrega página Solicitar cita
 - `cecb1fc` **Camilo Peña**: Revert "feat(pages): agrega página Solicitar cita"
 - `5fabfc4` **Ítalo Carmona**: Creación NavBar
-- `c8797ce` **archivohtml**: Merge branch 'main' into feature/footer-lista-utils
+- `c8797ce` **Camilo Peña** (`archivohtml`): Merge branch 'main' into feature/footer-lista-utils
 
 ### 06-10-2026 (11 commits)
 - `157153c` **Matías Yañez**: feat(molecules): agrega componente FilaCita para mostrar detalles de citas
-- `a6bb58d` **archivohtml**: feat: agrega utils (horario, validaciones, precios y formato)
-- `4e60612` **archivohtml**: feat: agrega catálogo de servicios desde el Excel
-- `c924a18` **archivohtml**: feat: agrega organismo Footer
-- `fa033bb` **archivohtml**: feat: agrega organismo ListaServicios con búsqueda y filtro por categoría
+- `a6bb58d` **Camilo Peña** (`archivohtml`): feat: agrega utils (horario, validaciones, precios y formato)
+- `4e60612` **Camilo Peña** (`archivohtml`): feat: agrega catálogo de servicios desde el Excel
+- `c924a18` **Camilo Peña** (`archivohtml`): feat: agrega organismo Footer
+- `fa033bb` **Camilo Peña** (`archivohtml`): feat: agrega organismo ListaServicios con búsqueda y filtro por categoría
 - `21b8926` **Matías Yañez**: feat(organisms): agrega componente Footer con información de contacto y horario
 - `24925b2` **Ítalo Carmona**: Correcciones menores de dependencias, creación plantilla pública
 - `6e26f82` **Ítalo Carmona**: Creación de rutas y corrección del main para mostrar las páginas
@@ -172,8 +190,12 @@ Registro de los 63 commits del repositorio, ordenado por fecha (formato dd-mm-aa
 ### 21-10-2026 (1 commit)
 - `e3fb97d` **Ítalo Carmona**: Contexto de citas y servicio. páginas MisCitas y detalle
 
-### 22-10-2026 (1 commit)
+### 22-10-2026 (2 commits)
 - `7115dae` **Ítalo Carmona**: Agregación de mapa con Leaflet, alertas de vacunación y vista veterinario
+- `fe776b4` **Camilo Peña**: docs: actualiza README con funcionalidades, pruebas y bitácora de commits
+
+### 25-10-2026 (1 commit)
+- `246203c` **Ítalo Carmona**: Ingreso de coverage a .gitignore y corrección menor a vite.config.js
 
 ## Material complementario
 Carpeta de Drive con documentos del semestre (ERS y otros):
