@@ -5,7 +5,7 @@
 - Camilo Peña (ca.penag@duocuc.cl)
 - Matías Yañez (mat.yanezt@duocuc.cl)
 
-## Caso Veterinaria San Carlos
+## Caso Veterinaria San Marcos
 Este consta de una veterinaria de mascotas domésticas que acepta perros, gatos, conejos y aves.
 Permite inicio de sesión y gestión de citas personales por parte de los clientes.
 Cuenta con una vista para veterinario y recepcionista, los cuales pueden comprobar las citas pendientes,
@@ -91,7 +91,7 @@ Qué cubren:
 Registro de los 63 commits del repositorio, ordenado por fecha (formato dd-mm-aaaa).
 
 ### 21-09-2026 (1 commit)
-- `1842d1a` **Ítalo Carmona**: Inicialización proyecto veterinaria San Carlos
+- `1842d1a` **Ítalo Carmona**: Inicialización proyecto veterinaria San marcos
 
 ### 22-09-2026 (3 commits)
 - `e9c7928` **Ítalo Carmona**: Creación de README. Implementación básica de estructura página de inicio de sesión con dos átomos
