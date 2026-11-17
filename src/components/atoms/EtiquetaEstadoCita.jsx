@@ -1,7 +1,9 @@
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 
-function EtiquetaEstadoCita({ estado = "Pendiente" }) {
+function EtiquetaEstadoCita(props) {
+  const estado = props.estado ?? "Pendiente";
+
   const obtenerVariante = (est) => {
     switch (est.toLowerCase()) {
       case 'confirmada':

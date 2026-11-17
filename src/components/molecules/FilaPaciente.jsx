@@ -3,15 +3,15 @@ import Boton from "../atoms/Boton";
 import { formatearFecha } from "../../utils/formato";
 import { ultimaAtencion } from "../../utils/pacientes";
 
-function FilaPaciente({ paciente, onVerFicha }) {
-  const ultima = ultimaAtencion(paciente);
+function FilaPaciente(props) {
+  const ultima = ultimaAtencion(props.paciente);
 
   return (
     <tr>
-      <td className="fw-semibold">{paciente.nombre}</td>
-      <td>{paciente.duenio}</td>
+      <td className="fw-semibold">{props.paciente.nombre}</td>
+      <td>{props.paciente.duenio}</td>
       <td>
-        <EtiquetaEspecie especie={paciente.especie} />
+        <EtiquetaEspecie especie={props.paciente.especie} />
       </td>
       <td>{ultima ? formatearFecha(ultima.fecha) : "—"}</td>
       <td>{ultima ? ultima.motivo : "—"}</td>
@@ -20,7 +20,7 @@ function FilaPaciente({ paciente, onVerFicha }) {
           texto="Ver ficha"
           variante="outline-primary"
           className="btn-sm"
-          onClick={() => onVerFicha(paciente)}
+          onClick={() => props.onVerFicha(props.paciente)}
         />
       </td>
     </tr>

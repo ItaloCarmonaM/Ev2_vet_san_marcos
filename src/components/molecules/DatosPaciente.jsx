@@ -1,10 +1,10 @@
-function DatosPaciente({ paciente }) {
+function DatosPaciente(props) {
   const datos = [
-    ["Dueño", paciente.duenio],
-    ["Especie", paciente.especie],
-    ["Raza", paciente.raza],
-    ["Edad", paciente.edad],
-    ["Peso", paciente.peso],
+    ["Dueño", props.paciente.duenio],
+    ["Especie", props.paciente.especie],
+    ["Raza", props.paciente.raza],
+    ["Edad", props.paciente.edad],
+    ["Peso", props.paciente.peso],
   ];
 
   return (

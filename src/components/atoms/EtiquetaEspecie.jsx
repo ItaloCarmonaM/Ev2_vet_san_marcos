@@ -1,7 +1,9 @@
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 
-function EtiquetaEspecie({ especie = "General" }) {
+function EtiquetaEspecie(props) {
+  const especie = props.especie ?? "General";
+
   const obtenerVariante = (esp) => {
     switch (esp.toLowerCase()) {
       case 'perro':

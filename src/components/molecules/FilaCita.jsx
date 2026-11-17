@@ -3,9 +3,8 @@ import EtiquetaEstadoCita from "../atoms/EtiquetaEstadoCita";
 import Boton from "../atoms/Boton";
 import { separarEspecies, formatearFecha, nombreDeServicio } from "../../utils/formato";
 
-function FilaCita({ cita, onAccion }) {
-  const { mascota, especie, fecha, hora, estado } = cita;
-  const nombreServicio = nombreDeServicio(cita);
+function FilaCita(props) {
+  const nombreServicio = nombreDeServicio(props.cita);
 
   return (
     <div className="card flex-row align-items-center justify-content-between p-3 mb-2">
@@ -13,21 +12,21 @@ function FilaCita({ cita, onAccion }) {
         <div>
           <h6 className="mb-0 fw-bold">{nombreServicio}</h6>
           <small className="text-muted">
-            Mascota: {mascota} • {formatearFecha(fecha)} {hora}
+            Mascota: {props.cita.mascota} • {formatearFecha(props.cita.fecha)} {props.cita.hora}
           </small>
         </div>
         <div>
-          {separarEspecies(especie).map((e) => (
+          {separarEspecies(props.cita.especie).map((e) => (
             <EtiquetaEspecie key={e} especie={e} />
           ))}
         </div>
-        <EtiquetaEstadoCita estado={estado} />
+        <EtiquetaEstadoCita estado={props.cita.estado} />
       </div>
 
-      {onAccion && (
+      {props.onAccion && (
         <Boton
           texto="Ver Detalle"
-          onClick={() => onAccion(cita)}
+          onClick={() => props.onAccion(props.cita)}
           variante="outline-primary"
         />
       )}

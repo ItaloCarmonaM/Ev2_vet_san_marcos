@@ -10,25 +10,25 @@ const ACCIONES = {
   Confirmada: [{ texto: "Completar", estado: "Completada", variante: "primary" }, CANCELAR],
 };
 
-function FilaTablaCita({ cita, onCambiarEstado }) {
-  const nombreServicio = nombreDeServicio(cita);
-  const acciones = ACCIONES[cita.estado] || [];
+function FilaTablaCita(props) {
+  const nombreServicio = nombreDeServicio(props.cita);
+  const acciones = ACCIONES[props.cita.estado] || [];
 
   return (
     <tr>
-      <td>{formatearFecha(cita.fecha)}</td>
-      <td>{cita.hora}</td>
+      <td>{formatearFecha(props.cita.fecha)}</td>
+      <td>{props.cita.hora}</td>
       <td>
-        {cita.mascota}{" "}
-        {separarEspecies(cita.especie).map((e) => (
+        {props.cita.mascota}{" "}
+        {separarEspecies(props.cita.especie).map((e) => (
           <EtiquetaEspecie key={e} especie={e} />
         ))}
       </td>
       <td>{nombreServicio}</td>
       <td>
-        <EtiquetaEstadoCita estado={cita.estado} />
+        <EtiquetaEstadoCita estado={props.cita.estado} />
       </td>
-      {onCambiarEstado && (
+      {props.onCambiarEstado && (
         <td>
           {acciones.length === 0 ? (
             <span className="text-muted">—</span>
@@ -40,7 +40,7 @@ function FilaTablaCita({ cita, onCambiarEstado }) {
                   texto={a.texto}
                   variante={a.variante}
                   className="btn-sm"
-                  onClick={() => onCambiarEstado(cita.id, a.estado)}
+                  onClick={() => props.onCambiarEstado(props.cita.id, a.estado)}
                 />
               ))}
             </div>

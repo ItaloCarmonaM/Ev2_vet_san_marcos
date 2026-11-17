@@ -1,6 +1,8 @@
 import Badge from "react-bootstrap/Badge";
 
-function EtiquetaEstadoVacuna({ estado = "Al día" }) {
+function EtiquetaEstadoVacuna(props) {
+  const estado = props.estado ?? "Al día";
+
   const obtenerVariante = (est) => {
     switch (est.toLowerCase()) {
       case "al día":
