@@ -1,6 +1,7 @@
 # Veterinaria San Marcos
+- Enlace a repositorio de Backend: https://github.com/Matiasytorres/backend_vet_san_marcos.git
 
-Proyecto del **Grupo 2**: sitio web de una veterinaria, desarrollado como frontend en React.
+Proyecto del **Grupo 2**: sitio web de una veterinaria, frontend desarrollado en React.
 
 ## Integrantes
 - Ítalo Carmona (it.carmona@duocuc.cl), cuenta de GitHub `ItaloCarmonaM`
