@@ -19,6 +19,7 @@ export const ENLACES_POR_ROL = {
     { texto: "Inicio", ruta: "/" },
     { texto: "Servicios", ruta: "/admin/servicios" },
     { texto: "Citas", ruta: "/admin/citas" },
+    { texto: "Usuarios", ruta: "/admin/usuarios" },
   ],
 };
 

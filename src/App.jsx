@@ -19,6 +19,7 @@ import PanelVeterinario from "./pages/PanelVeterinario";
 import FichaPaciente from "./pages/FichaPaciente";
 import AdminServicios from "./pages/AdminServicios";
 import AdminCitas from "./pages/AdminCitas";
+import AdminUsuarios from "./pages/AdminUsuarios";
 
 const DUENIO = ["dueno_mascota"];
 const PERSONAL = ["administrador", "recepcionista"];
@@ -59,6 +60,7 @@ function App() {
 
                 {/* Solo administrador */}
                 <Route path="/admin/servicios" element={protegida(ADMIN, <AdminServicios />)} />
+                <Route path="/admin/usuarios" element={protegida(ADMIN, <AdminUsuarios />)} />
 
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
