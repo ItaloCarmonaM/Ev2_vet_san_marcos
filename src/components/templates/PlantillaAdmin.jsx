@@ -2,23 +2,28 @@ import { Container } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../organisms/Navbar";
 import { useTituloPagina } from "../../hooks/useTituloPagina";
-import { PERFILES } from "../../data/perfiles";
+import { useAuth } from "../../hooks/useAuth";
+import { enlacesDeRol } from "../../data/menus";
 
 export default function PlantillaAdmin(props) {
-  const perfil = props.perfil ?? "admin";
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { enlaces, usuario } = PERFILES[perfil];
+  const { usuario, cerrarSesion } = useAuth();
   useTituloPagina(props.titulo);
+
+  function salir() {
+    cerrarSesion();
+    navigate("/login");
+  }
 
   return (
     <div className="d-flex flex-column min-vh-100">
       <Navbar
-        enlaces={enlaces}
+        enlaces={enlacesDeRol(usuario?.rol)}
         rutaActual={pathname}
         onNavegar={navigate}
-        usuario={usuario}
-        onCerrarSesion={() => navigate("/login")}
+        usuario={usuario?.nombre}
+        onCerrarSesion={salir}
       />
       <main className="flex-grow-1 py-4">
         <Container>

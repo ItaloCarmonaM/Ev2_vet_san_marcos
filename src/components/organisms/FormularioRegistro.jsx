@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CampoFormulario from "../molecules/CampoFormulario";
 import Boton from "../atoms/Boton";
+import Alerta from "../atoms/Alerta";
 import {
   campoObligatorio,
   validarEmail,
@@ -39,6 +40,7 @@ function FormularioRegistro(props) {
         nombre: datos.nombre.trim(),
         email: datos.email.trim(),
         telefono: datos.telefono,
+        clave: datos.clave,
       });
     }
   }
@@ -46,6 +48,8 @@ function FormularioRegistro(props) {
   return (
     <form onSubmit={handleSubmit} className="card p-4 tarjeta-login" noValidate>
       <h3 className="titulo-login mb-3 text-center fw-bold">Crear cuenta</h3>
+
+      {props.error && <Alerta texto={props.error} />}
 
       <CampoFormulario id="nombre" name="nombre" etiqueta="Nombre completo"
         placeholder="Ej: María Pérez" valor={datos.nombre}
@@ -63,7 +67,13 @@ function FormularioRegistro(props) {
         tipo="password" placeholder="Repite tu contraseña" valor={datos.confirmacion}
         onChange={manejarCambio} error={errores.confirmacion} />
 
-      <Boton tipo="submit" texto="Registrarme" variante="primary" className="w-100 mt-2" />
+      <Boton
+        tipo="submit"
+        texto={props.cargando ? "Registrando..." : "Registrarme"}
+        variante="primary"
+        className="w-100 mt-2"
+        deshabilitado={props.cargando}
+      />
     </form>
   );
 }

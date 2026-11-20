@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
 import { MemoryRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { AuthProvider } from "../context/AuthContext";
 import { ServiciosProvider } from "../context/ServiciosContext";
 import { CitasProvider } from "../context/CitasContext";
 
@@ -10,15 +11,17 @@ export function RutaActual() {
 
 export function renderEnRuta(elemento, { ruta = '/', path = '/', state, servicios, citas } = {}) {
   return render(
-    <ServiciosProvider iniciales={servicios}>
-      <CitasProvider iniciales={citas}>
-        <MemoryRouter initialEntries={[{ pathname: ruta, state }]}>
-          <Routes>
-            <Route path={path} element={elemento} />
-            <Route path="*" element={<RutaActual />} />
-          </Routes>
-        </MemoryRouter>
-      </CitasProvider>
-    </ServiciosProvider>
+    <AuthProvider>
+      <ServiciosProvider iniciales={servicios}>
+        <CitasProvider iniciales={citas}>
+          <MemoryRouter initialEntries={[{ pathname: ruta, state }]}>
+            <Routes>
+              <Route path={path} element={elemento} />
+              <Route path="*" element={<RutaActual />} />
+            </Routes>
+          </MemoryRouter>
+        </CitasProvider>
+      </ServiciosProvider>
+    </AuthProvider>
   );
 }

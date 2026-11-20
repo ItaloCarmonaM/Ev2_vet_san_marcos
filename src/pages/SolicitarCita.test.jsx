@@ -5,6 +5,7 @@ import { MemoryRouter, Routes, Route, useLocation } from 'react-router-dom';
 import SolicitarCita from './SolicitarCita';
 import { ServiciosProvider } from "../context/ServiciosContext"
 import { CitasProvider } from "../context/CitasContext"
+import { AuthProvider } from "../context/AuthContext"
 
 function Destino() {
   const { pathname, state } = useLocation();
@@ -19,17 +20,19 @@ function Destino() {
 
 function abrir(ruta = '/solicitar-cita') {
   return render(
-    <ServiciosProvider>
-      <CitasProvider>
-        <MemoryRouter initialEntries={[ruta]}>
-          <Routes>
-            <Route path="/solicitar-cita" element={<SolicitarCita />} />
-            <Route path="/solicitar-cita/:codigo" element={<SolicitarCita />} />
-            <Route path="/cita-confirmada" element={<Destino />} />
-          </Routes>
-        </MemoryRouter>
-      </CitasProvider>
-    </ServiciosProvider>
+    <AuthProvider>
+      <ServiciosProvider>
+        <CitasProvider>
+          <MemoryRouter initialEntries={[ruta]}>
+            <Routes>
+              <Route path="/solicitar-cita" element={<SolicitarCita />} />
+              <Route path="/solicitar-cita/:codigo" element={<SolicitarCita />} />
+              <Route path="/cita-confirmada" element={<Destino />} />
+            </Routes>
+          </MemoryRouter>
+        </CitasProvider>
+      </ServiciosProvider>
+    </AuthProvider>
   );
 }
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CampoFormulario from "../molecules/CampoFormulario";
 import Boton from "../atoms/Boton";
+import Alerta from "../atoms/Alerta";
 import { validarEmail, validarClave } from "../../utils/validaciones";
 
 function FormularioLogin(props) {
@@ -27,6 +28,9 @@ function FormularioLogin(props) {
     <form onSubmit={handleSubmit} className="card p-4 tarjeta-login" noValidate>
       <h3 className="titulo-login mb-3 text-center fw-bold">Iniciar Sesión</h3>
 
+      {props.aviso && <Alerta variante="info" texto={props.aviso} />}
+      {props.error && <Alerta texto={props.error} />}
+
       <CampoFormulario
         id="email"
         name="email"
@@ -49,7 +53,13 @@ function FormularioLogin(props) {
         error={errores.password}
       />
 
-      <Boton tipo="submit" texto="Ingresar" variante="primary" className="w-100 mt-2" />
+      <Boton
+        tipo="submit"
+        texto={props.cargando ? "Ingresando..." : "Ingresar"}
+        variante="primary"
+        className="w-100 mt-2"
+        deshabilitado={props.cargando}
+      />
     </form>
   );
 }

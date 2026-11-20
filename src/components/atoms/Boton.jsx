@@ -8,6 +8,7 @@ function Boton(props) {
       type={tipo}
       className={className}
       onClick={props.onClick}
+      disabled={props.deshabilitado}
     >
       {props.texto}
     </button>

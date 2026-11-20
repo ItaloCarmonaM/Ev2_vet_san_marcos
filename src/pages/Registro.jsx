@@ -1,15 +1,30 @@
+import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import FormularioRegistro from "../components/organisms/FormularioRegistro";
 import Boton from "../components/atoms/Boton";
 import { useTituloPagina } from "../hooks/useTituloPagina";
+import { registrar } from "../services/authService";
+import { registroRequestDto } from "../dto/AuthDto";
+import { obtenerMensajeError } from "../services/errores";
 
 function Registro() {
   const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const [cargando, setCargando] = useState(false);
   useTituloPagina("Crear cuenta");
 
-  function alRegistrar() {
-    navigate("/login");
+  async function alRegistrar(formulario) {
+    setCargando(true);
+    setError("");
+    try {
+      await registrar(registroRequestDto(formulario));
+      navigate("/login", { state: { registrado: true } });
+    } catch (e) {
+      setError(obtenerMensajeError(e));
+    } finally {
+      setCargando(false);
+    }
   }
 
   return (
@@ -17,7 +32,7 @@ function Registro() {
       <Container className="d-flex align-items-center justify-content-center min-vh-100 py-4">
         <Row className="w-100 justify-content-center">
           <Col xs={12} sm={10} md={7} lg={5}>
-            <FormularioRegistro onRegistrar={alRegistrar} />
+            <FormularioRegistro onRegistrar={alRegistrar} cargando={cargando} error={error} />
             <Boton
               texto="¿Ya tienes cuenta? Inicia sesión"
               variante="link"
