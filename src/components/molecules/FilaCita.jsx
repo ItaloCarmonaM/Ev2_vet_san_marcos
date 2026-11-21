@@ -1,10 +1,18 @@
 import EtiquetaEspecie from "../atoms/EtiquetaEspecie";
 import EtiquetaEstadoCita from "../atoms/EtiquetaEstadoCita";
 import Boton from "../atoms/Boton";
-import { separarEspecies, formatearFecha, nombreDeServicio } from "../../utils/formato";
+import {
+  separarEspecies,
+  formatearFecha,
+  nombreDeServicio,
+  nombreDeMascota,
+  especieDeCita,
+} from "../../utils/formato";
 
 function FilaCita(props) {
   const nombreServicio = nombreDeServicio(props.cita);
+  const mascota = nombreDeMascota(props.cita);
+  const especie = especieDeCita(props.cita);
 
   return (
     <div className="card flex-row align-items-center justify-content-between p-3 mb-2">
@@ -12,11 +20,11 @@ function FilaCita(props) {
         <div>
           <h6 className="mb-0 fw-bold">{nombreServicio}</h6>
           <small className="text-muted">
-            Mascota: {props.cita.mascota} • {formatearFecha(props.cita.fecha)} {props.cita.hora}
+            Mascota: {mascota} • {formatearFecha(props.cita.fecha)} {String(props.cita.hora || "").slice(0, 5)}
           </small>
         </div>
         <div>
-          {separarEspecies(props.cita.especie).map((e) => (
+          {separarEspecies(especie).map((e) => (
             <EtiquetaEspecie key={e} especie={e} />
           ))}
         </div>

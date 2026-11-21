@@ -1,26 +1,34 @@
 import EtiquetaEspecie from "../atoms/EtiquetaEspecie";
 import EtiquetaEstadoCita from "../atoms/EtiquetaEstadoCita";
 import Boton from "../atoms/Boton";
-import { separarEspecies, formatearFecha, nombreDeServicio } from "../../utils/formato";
+import {
+  separarEspecies,
+  formatearFecha,
+  nombreDeServicio,
+  nombreDeMascota,
+  especieDeCita,
+} from "../../utils/formato";
 
-// Acciones disponibles según el estado actual de la cita
 const CANCELAR = { texto: "Cancelar", estado: "Cancelada", variante: "outline-danger" };
 const ACCIONES = {
-  Pendiente: [{ texto: "Confirmar", estado: "Confirmada", variante: "primary" }, CANCELAR],
-  Confirmada: [{ texto: "Completar", estado: "Completada", variante: "primary" }, CANCELAR],
+  pendiente: [{ texto: "Confirmar", estado: "Confirmada", variante: "primary" }, CANCELAR],
+  confirmada: [{ texto: "Completar", estado: "Completada", variante: "primary" }, CANCELAR],
 };
 
 function FilaTablaCita(props) {
   const nombreServicio = nombreDeServicio(props.cita);
-  const acciones = ACCIONES[props.cita.estado] || [];
+  const estadoNorm = String(props.cita.estado || "").toLowerCase();
+  const acciones = ACCIONES[estadoNorm] || [];
+  const mascota = nombreDeMascota(props.cita);
+  const especie = especieDeCita(props.cita);
 
   return (
     <tr>
       <td>{formatearFecha(props.cita.fecha)}</td>
-      <td>{props.cita.hora}</td>
+      <td>{String(props.cita.hora || "").slice(0, 5)}</td>
       <td>
-        {props.cita.mascota}{" "}
-        {separarEspecies(props.cita.especie).map((e) => (
+        {mascota}{" "}
+        {separarEspecies(especie).map((e) => (
           <EtiquetaEspecie key={e} especie={e} />
         ))}
       </td>

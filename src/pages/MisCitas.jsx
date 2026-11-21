@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import PlantillaPublica from "../components/templates/PlantillaPublica";
 import ListaMisCitas from "../components/organisms/ListaMisCitas";
 import Boton from "../components/atoms/Boton";
+import Cargando from "../components/atoms/Cargando";
+import Alerta from "../components/atoms/Alerta";
 import { useCitas } from "../hooks/useCitas";
 import { useTituloPagina } from "../hooks/useTituloPagina";
 
 function MisCitas() {
   const navigate = useNavigate();
-  const { citas } = useCitas();
+  const { citas, cargando, error } = useCitas();
   useTituloPagina("Mis citas");
 
   return (
@@ -19,7 +21,12 @@ function MisCitas() {
           <Boton texto="Solicitar cita" onClick={() => navigate("/solicitar-cita")} />
         </header>
 
-        <ListaMisCitas citas={citas} onSolicitar={() => navigate("/solicitar-cita")} />
+        {error && <Alerta texto={error} />}
+        {cargando ? (
+          <Cargando texto="Cargando tus citas..." />
+        ) : (
+          <ListaMisCitas citas={citas} onSolicitar={() => navigate("/solicitar-cita")} />
+        )}
       </Container>
     </PlantillaPublica>
   );
