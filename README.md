@@ -1,7 +1,13 @@
 # Veterinaria San Marcos
-- Enlace a repositorio de Backend: https://github.com/Matiasytorres/backend_vet_san_marcos.git
 
-Proyecto del **Grupo 2**: sitio web de una veterinaria, frontend desarrollado en React.
+Proyecto del **Grupo 2**: plataforma web para la gestión integral de una clínica veterinaria, con frontend desarrollado en React e integrado con una API RESTful desplegada en AWS EC2.
+
+## Enlaces del proyecto y despliegue
+- **Repositorio Frontend:** https://github.com/ItaloCarmonaM/Ev2_vet_san_marcos
+- **Repositorio Backend:** https://github.com/Matiasytorres/backend_vet_san_marcos
+- **Documentación API (Swagger):** http://3.229.45.167:3000/api/docs/
+- **Aplicación Frontend (AWS EC2):** http://54.81.168.243:5173
+- **API Base URL (AWS EC2):** `http://3.229.45.167:3000/api/v1`
 
 ## Integrantes
 - Ítalo Carmona (it.carmona@duocuc.cl), cuenta de GitHub `ItaloCarmonaM`
@@ -9,74 +15,84 @@ Proyecto del **Grupo 2**: sitio web de una veterinaria, frontend desarrollado en
 - Matías Yañez (mat.yanezt@duocuc.cl), cuenta de GitHub `Matiasytorres`
 
 ## Caso Veterinaria San Marcos
-Este consta de una veterinaria de mascotas domésticas que acepta perros, gatos, conejos y aves.
-Permite inicio de sesión y gestión de citas personales por parte de los clientes.
-Cuenta con una vista para veterinario y recepcionista, los cuales pueden comprobar las citas pendientes,
-historial de pacientes y agendar nuevas citas.
+Sistema web para una clínica veterinaria de mascotas domésticas que atiende perros, gatos, conejos y aves.
+Permite el registro e inicio de sesión mediante JWT, reserva de horas con validación de disponibilidad en tiempo real, y gestión diferenciada por roles (`dueno_mascota`, `recepcionista` y `administrador`).
 
 ## Tecnologías
 - React 19 + Vite
+- Axios (cliente HTTP con interceptores JWT y manejo centralizado de errores)
 - React Bootstrap / Bootstrap 5
-- React Router DOM 7 (navegación entre páginas)
+- React Router DOM 7 (navegación y rutas protegidas por rol)
 - Leaflet + OpenStreetMap (mapa de ubicación)
 - Vitest + Testing Library + jsdom (pruebas) y cobertura con `@vitest/coverage-v8`
 - oxlint (análisis estático)
 
 ## Funcionalidades implementadas
 
-### Sitio público (cliente)
+### Sitio público y cliente (`dueno_mascota`)
 - **Inicio** (`/`): presentación de la veterinaria, cifras, servicios destacados y mapa con la ubicación de la clínica (Leaflet, Rancagua).
-- **Servicios** (`/servicios`): catálogo con búsqueda por texto (sin distinguir mayúsculas ni tildes, también en observaciones) y filtro por categoría.
+- **Servicios** (`/servicios`): catálogo conectado a la base de datos con búsqueda por texto (sin distinguir mayúsculas ni tildes) y filtro por categoría.
 - **Categorías** (`/categorias`) y **Detalle de servicio** (`/servicio/:codigo`).
-- **Solicitar cita** (`/solicitar-cita` y `/solicitar-cita/:codigo`): formulario con validaciones (domingos no se atiende, no se permiten fechas pasadas y las horas ocupadas se bloquean). El servicio llega preseleccionado si se entra desde una tarjeta.
-- **Cita confirmada** (`/cita-confirmada`): resumen con fecha, hora, precio y estado. Considera el recargo de la consulta de urgencia fuera de horario.
-- **Mis citas** (`/mis-citas`): listado de citas del cliente.
+- **Solicitar cita** (`/solicitar-cita` y `/solicitar-cita/:codigo`): formulario conectado a `/citas` y `/citas/ocupadas` con validaciones de horario y bloqueo automático de bloques ya reservados.
+- **Cita confirmada** (`/cita-confirmada`): resumen con fecha, hora, precio y estado, considerando recargo por atención de urgencia fuera de horario.
+- **Mis citas** (`/mis-citas`): listado de citas propias del cliente autenticado.
 - **Mis vacunas** (`/mis-vacunas`): historial de vacunación de las mascotas con alertas según estado (*Al día*, *Próxima a vencer* dentro de 30 días y *Vencida*).
-- **Login** (`/login`) y **Registro** (`/registro`) con validación de correo, teléfono chileno y contraseñas.
+- **Login** (`/login`) y **Registro** (`/registro`): autenticación contra `/auth/login` y `/auth/register` con persistencia de sesión mediante token JWT.
 
-### Vista del veterinario
+### Vista de personal (`recepcionista` y `administrador`)
+- **Administrar citas** (`/admin/citas`): listado general de citas y cambio de estado (`Pendiente` → `Confirmada` → `Completada`, o `Cancelada`) con validación de conflicto horario (HTTP 409).
 - **Panel del veterinario** (`/veterinario`): agenda de citas pendientes y confirmadas desde hoy, y buscador de pacientes por nombre o dueño.
-- **Ficha del paciente** (`/veterinario/paciente/:id`): datos del paciente, historial de atenciones, tabla de vacunas con alertas y formulario para registrar una nueva atención (motivo, diagnóstico, medicamentos), con opción de agendar un control de seguimiento.
+- **Ficha del paciente** (`/veterinario/paciente/:id`): datos del paciente, historial de atenciones, tabla de vacunas con alertas y formulario para registrar nuevas atenciones.
 
-### Vista de administración
-- **Administrar servicios** (`/admin/servicios`): CRUD de servicios con validaciones y confirmación antes de eliminar.
-- **Administrar citas** (`/admin/citas`): cambio de estado de cada cita (Pendiente → Confirmada → Completada, o Cancelada).
+### Vista de administración (`administrador`)
+- **Administrar servicios** (`/admin/servicios`): CRUD completo conectado a `/servicios` con código correlativo generado en backend (`SRV-XXX`), validaciones y confirmación antes de eliminar.
+- **Administrar usuarios** (`/admin/usuarios`): creación de usuarios, listado desde `/usuarios`, cambio de rol y activación/desactivación de cuentas.
 
-### Arquitectura y datos
-- Componentes organizados con **Atomic Design** (átomos, moléculas, organismos, plantillas y páginas).
-- Estado global con **Context API**: `ServiciosContext`, `CitasContext` y `PacientesContext`, con sus hooks `useServicios`, `useCitas` y `usePacientes`.
-- Los datos son simulados y viven en memoria (`src/data`), por lo que se reinician al recargar la página. No hay backend.
-- Utilidades puras en `src/utils`: horario, precios, formato, validaciones, códigos de servicio, vacunas y pacientes. Las de horario, precios, formato y validaciones tienen pruebas.
+## Arquitectura e integración con Backend
+- **Atomic Design**: componentes organizados en `atoms`, `molecules`, `organisms`, `templates` y `pages`.
+- **Capa de servicios (`src/services`)**: comunicación con la API REST mediante Axios (`api.js`, `authService.js`, `servicioService.js`, `citaService.js`, `usuarioService.js` y `errores.js`).
+- **Estado global (`src/context`)**: `AuthContext`, `ServiciosContext`, `CitasContext` y `PacientesContext`, sincronizados con los endpoints de la API.
+- **Control de acceso (`src/routes/RutaProtegida.jsx`)**: protección de rutas según autenticación y rol del usuario (`dueno_mascota`, `recepcionista`, `administrador`).
 
 ## Estructura del proyecto
-```
+```text
 src/
 ├── components/
-│   ├── atoms/        Boton, CampoTexto, AreaTexto, Casilla, Selector, Icono, EtiquetaEspecie, EtiquetaEstadoCita, EtiquetaEstadoVacuna
+│   ├── atoms/        Boton, CampoTexto, AreaTexto, Casilla, Selector, Icono, EtiquetaEspecie, EtiquetaEstadoCita, EtiquetaEstadoVacuna, Alerta, Cargando
 │   ├── molecules/    CampoFormulario, SelectorFechaHora, BuscadorServicios, BuscadorPacientes, TarjetaServicio, FilaCita, FilaTablaCita,
 │   │                 FilaPaciente, FilaVacuna, DatosPaciente, AlertaVacunas
 │   ├── organisms/    Navbar, Footer, FormularioLogin, FormularioRegistro, FormularioServicio, FormularioSolicitudCita, FormularioAtencion,
-│   │                 ListaServicios, ListaMisCitas, TablaCitas, TablaPacientes, TablaVacunas, HistorialAtenciones, MapaUbicacion
+│   │                 FormularioUsuario, ListaServicios, ListaMisCitas, TablaCitas, TablaUsuarios, TablaPacientes, TablaVacunas, HistorialAtenciones, MapaUbicacion
 │   └── templates/    PlantillaPublica, PlantillaAdmin
-├── context/          ServiciosContext, CitasContext, PacientesContext
-├── data/             servicios, citas, pacientes, perfiles
-├── hooks/            useServicios, useCitas, usePacientes, useTituloPagina
-├── pages/            páginas de la aplicación (y sus pruebas *.test.jsx)
-├── testUtils/        renderEnRuta (ayuda para probar páginas con router)
-└── utils/            horario, precios, formato, validaciones, validacionesCita, codigos, vacunas, pacientes
+├── context/          AuthContext, ServiciosContext, CitasContext, PacientesContext
+├── dto/              AuthDto, UsuarioDto
+├── hooks/            useAuth, useServicios, useCitas, usePacientes, useTituloPagina
+├── pages/            páginas de la aplicación (y pruebas *.test.jsx)
+├── routes/           RutaProtegida
+├── services/         api, authService, servicioService, citaService, usuarioService, errores
+├── testUtils/        renderEnRuta
+└── utils/            horario, precios, formato, validaciones, validacionesCita, codigos, vacunas, pacientes, sesion
 ```
 
-## Cómo ejecutar el proyecto
-```
-npm install
-npm run dev
-```
+## Configuración y ejecución local
+1. Instalar dependencias:
+   ```bash
+   npm install
+   ```
+2. Configurar la variable de entorno creando un archivo `.env` en la raíz del proyecto:
+   ```env
+   VITE_API_URL=[http://3.229.45.167:3000/api/v1](http://3.229.45.167:3000/api/v1)
+   ```
+3. Levantar el servidor de desarrollo:
+   ```bash
+   npm run dev
+   ```
 
 ## Pruebas
-Se usa Vitest con Testing Library. Actualmente hay **13 archivos de prueba y 56 pruebas**, todas en verde.
+Se utiliza Vitest con Testing Library (`jsdom`).
 
-```
-npm run test:run   # corre todas las pruebas una vez
+```bash
+npm run test:run   # ejecuta todas las pruebas una vez
 npm test           # modo watch
 npm run test:cov   # pruebas + reporte de cobertura (carpeta coverage/)
 ```
@@ -84,30 +100,21 @@ npm run test:cov   # pruebas + reporte de cobertura (carpeta coverage/)
 Qué cubren:
 - **Utilidades**: horario, precios, formato, validaciones y validaciones de cita.
 - **Componentes**: EtiquetaEspecie, TarjetaServicio y FormularioLogin.
-- **Páginas**: Login, Servicios, SolicitarCita, AdminCitas y AdminServicios (validaciones, navegación y flujos completos).
-
-### Cobertura
-- Cobertura global: **55,46 %** (reporte generado el 26-10-2026).
-- La carpeta `coverage/` está en el `.gitignore`, por lo que no se sube al repositorio. Para verla, ejecutar `npm run test:cov` y abrir `coverage/index.html`.
-- Aún sin pruebas: el módulo del veterinario (`PanelVeterinario`, `FichaPaciente` y sus componentes), el mapa (`MapaUbicacion`), las utilidades `codigos`, `vacunas` y `pacientes`, y varias páginas (Inicio, Registro, MisCitas, MisVacunas, Categorías y Detalle de servicio).
-
-## Errores corregidos durante las pruebas
-- `Servicios.jsx` tenía la función `manejarSeleccionarServicio` declarada dos veces. La segunda, que solo mostraba un `alert`, pisaba a la que navegaba, y "Solicitar cita" no llevaba al formulario.
-- Los servicios iniciales de `AdminServicios` no tenían `especie` ni `duracion`, así que no se podían editar y guardar.
+- **Páginas**: Login, Servicios, SolicitarCita, AdminCitas y AdminServicios.
 
 ## Aportes por integrante
-Según los commits del repositorio hasta el 25-10-2026 (65 en total).
+Según los commits del repositorio hasta el 21-11-2026 (76 en total).
 
 | Integrante | Commits | Aportes principales |
 |---|---|---|
-| Ítalo Carmona | 19 | Estructura inicial, Navbar, plantilla pública, rutas y router, login, contextos de citas y servicios, Mis citas, mapa con Leaflet, alertas de vacunación y vista del veterinario |
-| Matías Yañez | 11 | Átomos de etiquetas, FilaCita, página de Servicios, flujo de Solicitar cita y Cita confirmada, Categorías y Detalle de servicio, configuración de Vitest y pruebas de utilidades |
+| Ítalo Carmona | 23 | Estructura inicial, Navbar, plantilla pública, rutas y router, autenticación y sesión JWT, rutas protegidas por rol, gestión de usuarios, contextos, Mis citas, mapa con Leaflet, alertas de vacunación y vista del veterinario |
+| Matías Yañez | 18 | Átomos de etiquetas, FilaCita, página de Servicios, flujo de Solicitar cita y Cita confirmada, Categorías y Detalle de servicio, configuración de Vitest, pruebas de utilidades, integración con API REST para servicios y citas |
 | Camilo Peña | 35 | Utilidades (horario, validaciones, precios, formato), catálogo de servicios desde el Excel, ListaServicios, Selector, Icono y SelectorFechaHora, registro, vista de administración, estilos, pruebas de páginas, corrección de errores y README |
 
 ## Bitácora de cambios
-Registro de los 65 commits del repositorio hasta el 25-10-2026, ordenado por fecha (formato dd-mm-aaaa).
+Registro de los 76 commits del repositorio hasta el 21-11-2026, ordenado por fecha (formato dd-mm-aaaa).
 Las fechas pueden diferir en un día de las que muestra GitHub, según la zona horaria.
-Los commits de la cuenta `archivohtml` corresponden a Camilo Peña.
+Los commits de las cuentas `Camilo` y `archivohtml` corresponden a Camilo Peña.
 
 ### 21-09-2026 (1 commit)
 - `1842d1a` **Ítalo Carmona**: Inicialización proyecto veterinaria San Carlos
@@ -198,6 +205,27 @@ Los commits de la cuenta `archivohtml` corresponden a Camilo Peña.
 ### 25-10-2026 (1 commit)
 - `246203c` **Ítalo Carmona**: Ingreso de coverage a .gitignore y corrección menor a vite.config.js
 
+### 26-10-2026 (2 commits)
+- `51fafb8` **Matías Yañez**: Update Readme
+- `98990ef` **Matías Yañez**: Revise README for project details and contributions
+
+### 16-11-2026 (1 commit)
+- `ea8f84f` **Ítalo Carmona**: Adición enlace a backend en README
+
+### 17-11-2026 (1 commit)
+- `3cb015a` **Ítalo Carmona**: Corrección de props a elementos con prop desestructurado
+
+### 20-11-2026 (2 commits)
+- `c602ed8` **Ítalo Carmona**: Sesión, login, registro y rutas por rol
+- `01e9819` **Ítalo Carmona**: Implementación gestión de usuarios, incluyendo dto, páginas y componentes para su visualización.
+
+### 21-11-2026 (5 commits)
+- `b1fe364` **Matías Yañez**: Actualizar la URL de la API en el archivo .env.example
+- `a644731` **Matías Yañez**: Agregar servicio para la gestión de servicios: listar, crear, actualizar y eliminar
+- `0342d19` **Matías Yañez**: Implementar gestión de citas: cargar, crear y cambiar estado de citas con manejo de errores y carga
+- `549f9d8` **Matías Yañez**: Implementar gestión de servicios: recargar, agregar, actualizar y eliminar servicios con manejo de errores y estado de carga
+- `61b08aa` **Matías Yañez**: Refactor gestión de citas y componentes relacionados: se agregan funciones para obtener información de citas, se mejora el manejo de estados y se optimizan los componentes para mostrar datos de manera más clara.
+
 ## Material complementario
-Carpeta de Drive con documentos del semestre (ERS y otros):
+Carpeta de Drive con documentos del semestre (ERS, documento de integración, manual de usuario y otros):
 https://drive.google.com/drive/folders/1SsGsFhoXDgW7NzIUshiqj-TcnYFCs1jn?usp=sharing
